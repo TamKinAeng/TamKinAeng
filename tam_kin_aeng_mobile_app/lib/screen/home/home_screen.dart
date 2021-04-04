@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/body.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 
@@ -10,6 +11,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(),
       body: Body(),
+      // We are not able to use BottomNavigationBar because the icon parameter dont accept SVG
+      // We also use Provided to manage the state of our Nav
+      bottomNavigationBar: MyBottomNavBar(),
     );
   }
 
