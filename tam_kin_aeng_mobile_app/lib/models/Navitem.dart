@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/profile/profile_screen.dart';
 
 class NavItem {
   final int id;
@@ -28,6 +29,7 @@ class NavItems extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Contain index, icon, and destination(which page we map for them)
   List<NavItem> items = [
     NavItem(
       id: 1,
@@ -49,6 +51,7 @@ class NavItems extends ChangeNotifier {
     NavItem(
       id: 5,
       icon: "assets/icons/user.svg",
+      destination: ProfileScreen(),
     ),
   ];
 }
