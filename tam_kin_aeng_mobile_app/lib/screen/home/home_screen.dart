@@ -4,12 +4,14 @@ import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/body.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 
+import 'component/search.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       body: Body(),
       // We are not able to use BottomNavigationBar because the icon parameter dont accept SVG
       // We also use Provided to manage the state of our Nav
@@ -18,7 +20,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   // Refactor -> Extract method from AppBar
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
         // This is icons and logo on our app bar
         leading: IconButton(
@@ -32,7 +34,9 @@ class HomeScreen extends StatelessWidget {
           // Search Button
           IconButton(
             icon: SvgPicture.asset("assets/icons/search.svg"),
-            onPressed: () {},
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearch());
+            },
           ),
           SizedBox(
             // It means 5 because by out defaultSize = 10

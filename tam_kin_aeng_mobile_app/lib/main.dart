@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: LoginScreen(),
+        home: HomeScreen(), // For login page change to LoginScreen()
       ),
     );
   }
