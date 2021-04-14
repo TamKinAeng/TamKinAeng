@@ -6,6 +6,8 @@ import 'package:tam_kin_aeng_mobile_app/component/rounded_button.dart';
 import 'package:tam_kin_aeng_mobile_app/component/rounded_input.dart';
 import 'package:tam_kin_aeng_mobile_app/component/rounded_password_input.dart';
 
+import '../home/home_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -61,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   )),
                 ),
                 SizedBox(height: 10),
-                RoundedButton(title: 'Login'),
+                RoundedButton(title:'Login'),
                 SizedBox(height: 20),
                 Text("I don't have an account Sign up!"
                 ),

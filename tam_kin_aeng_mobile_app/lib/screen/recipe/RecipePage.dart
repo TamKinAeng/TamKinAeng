@@ -3,21 +3,27 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/component/layout.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/recipeDatabase.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class RecipeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: RecipeBody(),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text("Start Cooking!!"),
-        onPressed: () {},
+    return StreamProvider<QuerySnapshot>.value(
+          value: recipeDatabase().recipe,
+          child: Scaffold(
+        appBar: buildAppBar(),
+        body: RecipeBody(),
+        floatingActionButton: FloatingActionButton.extended(
+          label: Text("Start Cooking!!"),
+          onPressed: () {},
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        bottomNavigationBar: MyBottomNavBar()
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      bottomNavigationBar: MyBottomNavBar()
     );
   }
 
