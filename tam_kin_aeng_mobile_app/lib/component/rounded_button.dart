@@ -5,19 +5,31 @@ import 'package:tam_kin_aeng_mobile_app/constants.dart';
 import '../screen/home/home_screen.dart';
 
 class RoundedButton extends StatelessWidget {
+  
   const RoundedButton({
     Key key,
     @required this.title,
+    this.pagelink,
+    this.formkey,
   }) : super(key: key);
 
   final String title;
-
+  final Widget pagelink;
+  final GlobalKey<FormState> formkey;
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        if (formkey.currentState.validate()){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => this.pagelink));
+        }else{
+          ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('There was an error')));
+        }
+      },
       borderRadius: BorderRadius.circular(30),
       child: Container(
         width: size.width*0.3,
@@ -29,7 +41,7 @@ class RoundedButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 10),
         alignment: Alignment.center,
         child: Text(
-          'Login',
+          this.title,
           style: GoogleFonts.roboto(
           textStyle: TextStyle(
             color: Colors.white,

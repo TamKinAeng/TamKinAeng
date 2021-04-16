@@ -3,24 +3,41 @@ import 'package:tam_kin_aeng_mobile_app/component/input_container.dart';
 
 import '../constants.dart';
 
-class RoundedInput extends StatelessWidget {
-  const RoundedInput({
+class RoundedInput extends StatefulWidget {
+   RoundedInput({
     Key key,
     @required this.icon,
-    @required this.hint
+    @required this.hint,
   }) : super(key: key);
 
-  final IconData icon;
-  final String hint;
+  IconData icon;
+  String hint;
+  bool isError = false;
+  @override
+  _RoundedInputState createState() => _RoundedInputState();
+}
 
+class _RoundedInputState extends State<RoundedInput> {
   @override
   Widget build(BuildContext context) {
     return InputContainer(
-        child: TextField(
+        child: TextFormField(
+         validator: (value) {
+            if (value == null || value.isEmpty 
+            || RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+").hasMatch(value)){
+              setState(() {
+                widget.isError = true;
+                widget.hint = "Please enter a valid email";
+              });
+              return "";
+            }
+            return null;
+          },
         cursorColor: kPrimaryColor,
         decoration: InputDecoration(
-          icon: Icon(icon, color: kPrimaryColor),
-          hintText: hint,
+          icon: Icon(widget.icon, color: kPrimaryColor),
+          hintText: widget.hint,
+          hintStyle: TextStyle(color: widget.isError? Colors.red: Colors.black54),
           border: InputBorder.none
         ),
       ),);

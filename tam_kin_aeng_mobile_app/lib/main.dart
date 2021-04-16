@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/register/register.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/Login/login.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/forgot/forgot.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'models/Navitem.dart';
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
               appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: HomeScreen(), // For login page change to LoginScreen()
+            home: LoginScreen(), // For login page change to LoginScreen()
           ),
         );
       }

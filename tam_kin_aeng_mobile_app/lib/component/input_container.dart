@@ -14,8 +14,9 @@ class InputContainer extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       width: size.width*0.8,
+      height: size.height*0.085,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: kPrimaryColor.withAlpha(50)

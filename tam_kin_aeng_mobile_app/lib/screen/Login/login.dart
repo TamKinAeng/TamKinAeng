@@ -14,6 +14,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -27,48 +32,51 @@ class _LoginScreenState extends State<LoginScreen> {
       Align(
         alignment: Alignment.center,
         child: SingleChildScrollView(
-            child: Container(
+            child: Form(
+              key: _formKey,
+                          child: Container(
           width: size.width,
           height: defaultLoginSize,
           child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset('assets/images/BakingCakes1.svg',
-                    width: 100, height: 200),
-                Text(
-                  'Welcome to TamKinAeng',
-                  style: GoogleFonts.righteous(
-                    textStyle: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset('assets/images/BakingCakes1.svg',
+                      width: 100, height: 200),
+                  Text(
+                    'Welcome to TamKinAeng',
+                    style: GoogleFonts.righteous(
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Text('Please login before you can access the main page',
+                  SizedBox(height: 10),
+                  Text('Please login before you can access the main page',
+                      style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                        fontSize: 12,
+                      ))),
+                  SizedBox(height: 10),
+                  RoundedInput(icon: Icons.mail, hint: 'E-mail Address',),
+                  RoundedPasswordInput(hint: 'Password'),
+                  SizedBox(height: 10),
+                  Text(
+                    'Forgot Password?',
                     style: GoogleFonts.roboto(
                         textStyle: TextStyle(
                       fontSize: 12,
-                    ))),
-                SizedBox(height: 10),
-                RoundedInput(icon: Icons.mail, hint: 'E-mail Address'),
-                RoundedPasswordInput(hint: 'Password'),
-                SizedBox(height: 10),
-                Text(
-                  'Forgot Password?',
-                  style: GoogleFonts.roboto(
-                      textStyle: TextStyle(
-                    fontSize: 12,
-                  )),
-                ),
-                SizedBox(height: 10),
-                RoundedButton(title:'Login'),
-                SizedBox(height: 20),
-                Text("I don't have an account Sign up!"
-                ),
-              ]),
-        )),
+                    )),
+                  ),
+                  SizedBox(height: 10),
+                  RoundedButton(title:'Login',pagelink: HomeScreen(), formkey: _formKey,),
+                  SizedBox(height: 20),
+                  Text("I don't have an account Sign up!"
+                  ),
+                ]),
+        ),
+            )),
       )
     ]));
   }
