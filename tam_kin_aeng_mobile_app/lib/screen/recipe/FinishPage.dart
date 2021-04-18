@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/component/layout.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/cookingstepDatabase.dart';
-import 'package:tam_kin_aeng_mobile_app/screen/recipe/CookingPage.dart';
 
-class RecipeScreen extends StatelessWidget {
+class FinishScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    // return StreamProvider<QuerySnapshot>.value(
-    //       value: recipeDatabase().recipe,
-    //       child:
     return Scaffold(
         appBar: buildAppBar(),
-        body: RecipeBody(),
+        body: Center(
+              child: Container(
+                margin: EdgeInsets.all(5),
+                child: Center(
+                  child: Column(children: [
+                    Text('Congrate!!',
+                        style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                          fontSize: 60,
+                        )))]),
+                ),)),
         floatingActionButton: FloatingActionButton.extended(
-          label: Text("Start Cooking!!"),
+          label: Text("Finish!!"),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CookingScreen(index: 0),
+              MaterialPageRoute(builder: (context) => HomeScreen(),
             ));
           },
         ),
