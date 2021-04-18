@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tam_kin_aeng_mobile_app/models/RecipeBundle.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 
-import 'categories.dart';
 import 'recipe_bundle_card.dart';
 
 class Body extends StatelessWidget {
@@ -11,11 +10,9 @@ class Body extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: <Widget>[
-          Categories(),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.defaultSize * 2), //20
+              padding: EdgeInsets.all(SizeConfig.defaultSize * 2), //20
               child: GridView.builder(
                 itemCount: recipeBundles.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -31,7 +28,6 @@ class Body extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) => RecipeBundleCard(
                   recipeBundle: recipeBundles[index],
-                  press: () {},
                 ),
               ),
             ),

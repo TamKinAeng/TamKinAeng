@@ -1,79 +1,109 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tam_kin_aeng_mobile_app/models/RecipeBundle.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/recipe/recipe_landing.dart';
 
 import '../../../size_config.dart';
 
 class RecipeBundleCard extends StatelessWidget {
   final RecipeBundle recipeBundle;
-  final Function press;
 
-  const RecipeBundleCard({Key key, this.recipeBundle, this.press})
-      : super(key: key);
+  const RecipeBundleCard({Key key, this.recipeBundle}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     double defaultSize = SizeConfig.defaultSize;
-    return Container(
-      // Bundle Box or you could say it a bundle frame
-      decoration: BoxDecoration(
-        color: recipeBundle.color,
-        borderRadius: BorderRadius.circular(defaultSize * 1.8), //18
-      ),
-      child: Row(
-        children: <Widget>[
-          // Text or some detail about our bundle
-          Expanded(
-              child: Padding(
-            padding: EdgeInsets.all(defaultSize * 2), //20
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Spacer(),
-                // Bundle Name
-                Text(
-                  recipeBundle.title,
-                  style: TextStyle(
-                    fontSize: defaultSize * 2.2, //22
-                    color: Colors.white,
+    return InkWell(
+      // use InkWell to response to user click on the bundle
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => RecipeLanding()));
+      },
+      // Optional: can add some ripple effect to the InkWell to make our bundle card more beautiful
+      child: Container(
+        // Bundle Box or you could say it a bundle frame
+        decoration: BoxDecoration(
+          color: recipeBundle.color,
+          borderRadius: BorderRadius.circular(defaultSize * 1.8), //18
+        ),
+        child: Row(
+          children: <Widget>[
+            // Text or some detail about our bundle
+            Expanded(
+                child: Padding(
+              padding: EdgeInsets.all(defaultSize * 1.5), //20
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Spacer(),
+                  // Bundle Name
+                  Text(
+                    recipeBundle.title,
+                    style: TextStyle(
+                      fontSize: defaultSize * 2, //20
+                      color: Colors.white,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: defaultSize * 0.5), //5
-                // Bundle details
-                Text(
-                  recipeBundle.description,
-                  style: TextStyle(
-                      color: Colors.white54, fontSize: defaultSize * 1.5),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Spacer(),
-                // Amount of recipes and chefs who we use his/her recipes in this bundle
-                buildInfoRow(defaultSize,
-                    iconSrc: "assets/icons/pot.svg",
-                    text: "${recipeBundle.recipes} Recipes"),
-                SizedBox(
-                  height: defaultSize,
-                ), //10
-                buildInfoRow(defaultSize,
-                    iconSrc: "assets/icons/chef.svg",
-                    text: "${recipeBundle.chefs} Chefs"),
-                Spacer(),
-              ],
-            ),
-          )),
-          SizedBox(width: defaultSize * 0.5), //5
-          // Picture in our bundle frame
-          AspectRatio(
-            aspectRatio: 0.71,
-            child: Image.asset(
-              recipeBundle.imageSrcs,
-              fit: BoxFit.cover,
-              alignment: Alignment.centerLeft,
-            ),
-          )
-        ],
+                  SizedBox(height: defaultSize * 0.5), //5
+                  // Bundle details
+                  Text(
+                    recipeBundle.description,
+                    style: TextStyle(
+                        color: Colors.white54, fontSize: defaultSize * 1.5),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Spacer(),
+                  // Amount of recipes and chefs who we use his/her recipes in this bundle
+                  buildInfoRow(defaultSize,
+                      iconSrc: "assets/icons/pot.svg",
+                      text: "${recipeBundle.recipes} Recipes"),
+                  SizedBox(
+                    height: defaultSize,
+                  ), //10
+                  buildInfoRow(defaultSize,
+                      iconSrc: "assets/icons/chef.svg",
+                      text: "${recipeBundle.chefs} Chefs"),
+                  Spacer(),
+                  // Button linked to recipe landing page
+                  // TextButton(
+                  //   onPressed: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => RecipeLanding()));
+                  //   },
+                  //   child: Text(
+                  //     'View Detail',
+                  //     style: TextStyle(
+                  //         fontSize: defaultSize * 1.5, color: Colors.white),
+                  //   ),
+                  //   style: ButtonStyle(
+                  //       backgroundColor:
+                  //           MaterialStateProperty.all<Color>(Colors.teal),
+                  //       shape:
+                  //           MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //               RoundedRectangleBorder(
+                  //         borderRadius:
+                  //             BorderRadius.circular(defaultSize * 1.8),
+                  //       ))),
+                  // ),
+                ],
+              ),
+            )),
+            SizedBox(width: defaultSize * 0.5), //5
+            // Picture in our bundle frame
+            AspectRatio(
+              aspectRatio: 0.71,
+              child: Image.asset(
+                recipeBundle.imageSrcs,
+                fit: BoxFit.cover,
+                alignment: Alignment.centerLeft,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
