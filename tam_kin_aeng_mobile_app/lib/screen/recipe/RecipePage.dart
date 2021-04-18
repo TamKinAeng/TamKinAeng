@@ -4,17 +4,19 @@ import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/component/layout.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/recipeDatabase.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/ingredientDatabase.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 
 class RecipeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return StreamProvider<QuerySnapshot>.value(
-          value: recipeDatabase().recipe,
-          child: Scaffold(
+    // return StreamProvider<QuerySnapshot>.value(
+    //       value: recipeDatabase().recipe,
+    //       child: 
+          return Scaffold(
         appBar: buildAppBar(),
         body: RecipeBody(),
         floatingActionButton: FloatingActionButton.extended(
@@ -23,9 +25,10 @@ class RecipeScreen extends StatelessWidget {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         bottomNavigationBar: MyBottomNavBar()
-      ),
+      // ),
     );
   }
+
 
   AppBar buildAppBar() {
     return AppBar(

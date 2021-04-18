@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class recipeDatabase {
 
-  final CollectionReference recipeCollection = FirebaseFirestore.instance.collection('Recipe');
+  final DocumentReference recipeCollection = FirebaseFirestore.instance.collection('Recipe').doc('food1');
 
 
   //get recipe data
-  Stream<QuerySnapshot> get recipe {
+  Stream<DocumentSnapshot> get recipe {
     return recipeCollection.snapshots();
   }
 }
