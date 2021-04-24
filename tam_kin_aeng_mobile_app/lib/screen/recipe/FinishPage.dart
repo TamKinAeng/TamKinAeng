@@ -24,6 +24,7 @@ class FinishScreen extends StatelessWidget {
                           fontSize: 60,
                         )))]),
                 ),)),
+                // Go back to HomeScreen button
         floatingActionButton: FloatingActionButton.extended(
           label: Text("Finish!!"),
           onPressed: () {

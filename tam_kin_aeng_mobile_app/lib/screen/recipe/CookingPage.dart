@@ -6,20 +6,17 @@ import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/cookingstepDatabase.dart';
 
 class CookingScreen extends StatelessWidget {
+  //
   final int index;
 
   const CookingScreen({Key key, this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    // return StreamProvider<QuerySnapshot>.value(
-    //       value: recipeDatabase().recipe,
-    //       child:
     return Scaffold(
         appBar: buildAppBar(),
         body: ListCooking(Index: index),
         bottomNavigationBar: MyBottomNavBar()
-        // ),
         );
   }
 

@@ -7,6 +7,7 @@ import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/cookingstepDatabase.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/CookingPage.dart';
 
+
 class RecipeScreen extends StatelessWidget {
   final DocumentSnapshot recipeIndex;
 
@@ -15,9 +16,6 @@ class RecipeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    // return StreamProvider<QuerySnapshot>.value(
-    //       value: recipeDatabase().recipe,
-    //       child:
     return Scaffold(
         appBar: buildAppBar(),
         body: RecipeBody(
@@ -26,6 +24,7 @@ class RecipeScreen extends StatelessWidget {
         floatingActionButton: FloatingActionButton.extended(
           label: Text("Start Cooking!!"),
           onPressed: () {
+            // go to cookingStep
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -35,7 +34,6 @@ class RecipeScreen extends StatelessWidget {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         bottomNavigationBar: MyBottomNavBar()
-        // ),
         );
   }
 

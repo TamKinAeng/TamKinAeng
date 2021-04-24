@@ -35,6 +35,7 @@ dependencies:
   firebase_auth: ^1.1.0
   cloud_firestore: ^1.0.4
   bubble_tab_indicator: ^0.1.5
+  custom_timer: ^0.0.3
 
 dev_dependencies:
   flutter_test:

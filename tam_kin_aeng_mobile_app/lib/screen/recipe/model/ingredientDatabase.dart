@@ -13,6 +13,7 @@ class _ListIngredientState extends State<ListIngredient> {
   Widget build(BuildContext context) {
     return Container(
         child: StreamBuilder(
+          //get data
             stream: FirebaseFirestore.instance.collection('Recipe').doc('food1').collection('ingredient').snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) {
@@ -22,6 +23,7 @@ class _ListIngredientState extends State<ListIngredient> {
                 }
 
                 return ListView(
+                  // map the data in to document
                 children: snapshot.data.docs.map((document) {
                   return Container(
                       margin: EdgeInsets.all(5),
