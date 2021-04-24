@@ -70,37 +70,36 @@ class _ListCookingState extends State<ListCooking> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                if(lists[widget.Index]["time"] > 0)
-                    Column(
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height / 10,
-                          child: CustomTimer(
-                            controller: widget._controller,
-                            from: Duration(seconds: lists[widget.Index]["time"]),
-                            to: Duration(seconds: 0),
-                            builder: (CustomTimerRemainingTime remaining) {
-                              return Text(
-                                "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
-                                style: TextStyle(fontSize: 30.0),
-                              );
-                            },
-                          ),
+                if (lists[widget.Index]["time"] > 0)
+                  Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height / 10,
+                        child: CustomTimer(
+                          controller: widget._controller,
+                          from: Duration(seconds: lists[widget.Index]["time"]),
+                          to: Duration(seconds: 0),
+                          builder: (CustomTimerRemainingTime remaining) {
+                            return Text(
+                              "${remaining.hours}:${remaining.minutes}:${remaining.seconds}",
+                              style: TextStyle(fontSize: 30.0),
+                            );
+                          },
                         ),
-                      
-                    SizedBox(
-                      height: 12.0,
-                    ),
-                    FlatButton(
-                      child: Text(
-                        "Start",
-                        style: GoogleFonts.roboto(color: Colors.white),
                       ),
-                      onPressed: () => widget._controller.start(),
-                      color: Colors.green,
-                    ),
+                      SizedBox(
+                        height: 12.0,
+                      ),
+                      FlatButton(
+                        child: Text(
+                          "Start",
+                          style: GoogleFonts.roboto(color: Colors.white),
+                        ),
+                        onPressed: () => widget._controller.start(),
+                        color: Colors.green,
+                      ),
                     ],
-                    ),
+                  ),
                 Center(
                   child: Container(
                     height: MediaQuery.of(context).size.height / 6,
@@ -114,13 +113,17 @@ class _ListCookingState extends State<ListCooking> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CookingScreen(
-                                          index: widget.Index - 1, RecipeDB: widget.StepDB,),
+                                        index: widget.Index - 1,
+                                        RecipeDB: widget.StepDB,
+                                      ),
                                     ));
                               } else {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => RecipeScreen(),
+                                      builder: (context) => RecipeScreen(
+                                        recipeIndex: widget.StepDB,
+                                      ),
                                     ));
                               }
                             }),
@@ -132,7 +135,9 @@ class _ListCookingState extends State<ListCooking> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CookingScreen(
-                                          index: widget.Index + 1, RecipeDB: widget.StepDB,),
+                                        index: widget.Index + 1,
+                                        RecipeDB: widget.StepDB,
+                                      ),
                                     ));
                               } else {
                                 Navigator.push(
