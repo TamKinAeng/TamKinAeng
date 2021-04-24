@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/models/TestRecipeCard.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/search.dart';
-import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/recipe_card.dart';
 
 import '../../size_config.dart';

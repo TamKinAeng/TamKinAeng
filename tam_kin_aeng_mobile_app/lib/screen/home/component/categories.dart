@@ -36,8 +36,6 @@ class CategoriesData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double defaultSize = SizeConfig.defaultSize;
-    // if (recipeCateDetail.cuisine.toLowerCase() == cuisine.toLowerCase()) {
-    // Check whether the cuisine are matching with category or not
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection('Recipe').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -54,7 +52,8 @@ class CategoriesData extends StatelessWidget {
               return snapshot.data.docs[index]['cuisine']
                           .toString()
                           .toLowerCase() ==
-                      cuisine.toLowerCase()
+                      cuisine
+                          .toLowerCase() // Check whether the cuisine are matching with category or not
                   ? InkWell(
                       // use inkWell to make our recipe on each categories clickable
                       onTap: () {
@@ -131,13 +130,9 @@ class CategoriesData extends StatelessWidget {
                     )
                   : Container();
             },
-            // children: snapshot.data.docs.map((DocumentSnapshot documentSnapshot) {
-
-            // }).toList(),
           ),
         );
       },
     );
-    // }
   }
 }
