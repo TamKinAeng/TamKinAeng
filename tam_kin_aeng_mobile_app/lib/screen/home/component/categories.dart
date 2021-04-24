@@ -75,7 +75,7 @@ class CategoriesData extends StatelessWidget {
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(
                                       0, 0, defaultSize * 3, 0),
-                                  child: Image.asset(
+                                  child: Image.network(
                                     snapshot.data.docs[index]['imgUrl'],
                                     height: defaultSize * 7.5, //75
                                     width: defaultSize * 10, //100
