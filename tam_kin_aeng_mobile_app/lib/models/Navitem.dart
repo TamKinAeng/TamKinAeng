@@ -40,7 +40,6 @@ class NavItems extends ChangeNotifier {
     NavItem(
       id: 2,
       icon: "assets/icons/list.svg",
-      destination: RecipeScreen(),
     ),
     NavItem(
       id: 3,
