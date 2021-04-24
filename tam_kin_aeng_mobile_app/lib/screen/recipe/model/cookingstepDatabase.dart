@@ -9,9 +9,10 @@ import 'package:custom_timer/custom_timer.dart';
 
 class ListCooking extends StatefulWidget {
   final int Index;
+  final DocumentSnapshot StepDB;
   final CustomTimerController _controller = new CustomTimerController();
 
-  ListCooking({Key key, @required this.Index}) : super(key: key);
+  ListCooking({Key key, @required this.Index, this.StepDB}) : super(key: key);
   @override
   _ListCookingState createState() => _ListCookingState();
 }
@@ -23,7 +24,7 @@ class _ListCookingState extends State<ListCooking> {
       child: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('Recipe')
-            .doc('food1')
+            .doc(widget.StepDB.id)
             .collection('cookingStep')
             .snapshots(),
         builder: (BuildContext context, snapshot) {
@@ -113,7 +114,7 @@ class _ListCookingState extends State<ListCooking> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CookingScreen(
-                                          index: widget.Index - 1),
+                                          index: widget.Index - 1, RecipeDB: widget.StepDB,),
                                     ));
                               } else {
                                 Navigator.push(
@@ -131,7 +132,7 @@ class _ListCookingState extends State<ListCooking> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CookingScreen(
-                                          index: widget.Index + 1),
+                                          index: widget.Index + 1, RecipeDB: widget.StepDB,),
                                     ));
                               } else {
                                 Navigator.push(

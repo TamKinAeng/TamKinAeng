@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ListIngredient extends StatefulWidget {
+  final DocumentSnapshot RecipeDB;
+
+  const ListIngredient({Key key, this.RecipeDB}) : super(key: key);
   @override
   _ListIngredientState createState() => _ListIngredientState();
 }
@@ -14,7 +17,7 @@ class _ListIngredientState extends State<ListIngredient> {
     return Container(
         child: StreamBuilder(
           //get data
-            stream: FirebaseFirestore.instance.collection('Recipe').doc('food1').collection('ingredient').snapshots(),
+            stream: FirebaseFirestore.instance.collection('Recipe').doc(widget.RecipeDB.id).collection('ingredient').snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) {
                 return Center(

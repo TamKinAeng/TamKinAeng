@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,7 +31,7 @@ class RecipeScreen extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CookingScreen(index: 0),
+                  builder: (context) => CookingScreen(index: 0, RecipeDB: recipeIndex,),
                 ));
           },
         ),
