@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return DefaultTabController(
-      length: 8,
+      length: 5,
       child: Scaffold(
         appBar: buildAppBar(context),
         body: TabBarView(
@@ -27,16 +27,7 @@ class HomeScreen extends StatelessWidget {
               category: "Italian",
             ),
             Categories(
-              category: "Chinese",
-            ),
-            Categories(
-              category: "Maxican",
-            ),
-            Categories(
-              category: "Thai",
-            ),
-            Categories(
-              category: "Japanese",
+              category: "American",
             ),
             Categories(
               category: "Global",
@@ -115,31 +106,7 @@ class HomeScreen extends StatelessWidget {
           ),
           Tab(
             child: Text(
-              "Chinese",
-              style: TextStyle(
-                fontSize: defaultSize * 1.5,
-              ),
-            ),
-          ),
-          Tab(
-            child: Text(
-              "Maxican",
-              style: TextStyle(
-                fontSize: defaultSize * 1.5,
-              ),
-            ),
-          ),
-          Tab(
-            child: Text(
-              "Thai",
-              style: TextStyle(
-                fontSize: defaultSize * 1.5,
-              ),
-            ),
-          ),
-          Tab(
-            child: Text(
-              "Japanese",
+              "American",
               style: TextStyle(
                 fontSize: defaultSize * 1.5,
               ),

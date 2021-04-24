@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecipeCateDetail {
   final int id;
   final String name, description, cuisine, imageSrcs;
+  final CollectionReference recipeCollection =
+      FirebaseFirestore.instance.collection('Recipe');
 
   RecipeCateDetail(
       {this.name, this.description, this.cuisine, this.imageSrcs, this.id});

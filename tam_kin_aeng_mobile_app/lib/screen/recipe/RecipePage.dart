@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
@@ -7,6 +8,10 @@ import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/cookingstepDatabase.
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/CookingPage.dart';
 
 class RecipeScreen extends StatelessWidget {
+  final DocumentSnapshot recipeIndex;
+
+  const RecipeScreen({Key key, this.recipeIndex}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -15,14 +20,17 @@ class RecipeScreen extends StatelessWidget {
     //       child:
     return Scaffold(
         appBar: buildAppBar(),
-        body: RecipeBody(),
+        body: RecipeBody(
+          recipeRecieve: recipeIndex,
+        ),
         floatingActionButton: FloatingActionButton.extended(
           label: Text("Start Cooking!!"),
           onPressed: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CookingScreen(index: 0),
-            ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CookingScreen(index: 0),
+                ));
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

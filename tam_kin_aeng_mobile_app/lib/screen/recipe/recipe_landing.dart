@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/models/TestRecipeCard.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/search.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/recipe_card.dart';
 
 import '../../size_config.dart';
@@ -57,8 +58,11 @@ class RecipeLanding extends StatelessWidget {
     return AppBar(
         // This is icons and logo on our app bar
         leading: IconButton(
-          icon: SvgPicture.asset("assets/icons/menu.svg"),
-          onPressed: () {},
+          icon: SvgPicture.asset("assets/icons/back.svg"),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          },
         ),
         // On Android by default its false
         centerTitle: true,
