@@ -55,18 +55,21 @@ class RecipeLanding extends StatelessWidget {
   }
 
   AppBar buildAppBar(BuildContext context) {
+    double defaultSize = SizeConfig.defaultSize;
     return AppBar(
         // This is icons and logo on our app bar
         leading: IconButton(
           icon: SvgPicture.asset("assets/icons/back.svg"),
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            Navigator.pop(context);
           },
         ),
         // On Android by default its false
         centerTitle: true,
-        title: Image.asset("assets/images/logo.png"),
+        title: Image.asset(
+          "assets/images/logoRevised.png",
+          height: defaultSize * 4,
+        ),
         actions: <Widget>[
           // Search Button
           IconButton(

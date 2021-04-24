@@ -53,7 +53,10 @@ class HomeScreen extends StatelessWidget {
 
       // On Android by default its false
       centerTitle: true,
-      title: Image.asset("assets/images/logo.png"),
+      title: Image.asset(
+        "assets/images/logoRevised.png",
+        height: defaultSize * 4,
+      ),
       actions: <Widget>[
         // Search Button
         IconButton(
