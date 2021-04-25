@@ -1,105 +1,137 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:tam_kin_aeng_mobile_app/constants.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/recipe/RecipePage.dart';
 
-class DataSearch extends SearchDelegate<String> {
-  final recipe = [
-    "AA",
-    "AB",
-    "AC",
-    "BA",
-    "BB",
-    "BC",
-    "CA",
-    "CB",
-    "CC",
-  ];
+import '../../../size_config.dart';
 
-  final recentRecipe = [
-    "BA",
-    "BB",
-    "BC",
-  ];
+class DataSearch extends StatefulWidget {
+  @override
+  _DataSearchState createState() => _DataSearchState();
+}
+
+class _DataSearchState extends State<DataSearch> {
+  final TextEditingController searchController = TextEditingController();
+  QuerySnapshot snapshotData;
+  bool isExecuted = false;
+  double defaultSize = SizeConfig.defaultSize;
 
   @override
-  List<Widget> buildActions(BuildContext context) {
-    // actions for app bar
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = "";
-        },
-      )
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    // leading icon on the left of the app bar
-    return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
-        progress: transitionAnimation,
-      ),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // show some result based on the selection
-    return Center(
-      child: Container(
-        height: 100.0,
-        width: 100.0,
-        child: Card(
-          color: kPrimaryColor,
-          shape: StadiumBorder(),
-          child: Center(
-            child: Text(query),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // show when someone search for something
-    final suggestionList = query.isEmpty
-        ? recentRecipe
-        : recipe
-            .where((p) => p.toLowerCase().startsWith(query.toLowerCase()))
-            .toList();
-
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          showResults(context);
-        },
-        leading: Icon(Icons.restaurant_menu),
-        title: RichText(
-          text: TextSpan(
-              text: suggestionList[index].substring(0, query.length),
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-              children: [
-                TextSpan(
-                  text: suggestionList[index].substring(
-                    query.length,
-                  ),
+  Widget build(BuildContext context) {
+    Widget searchData() {
+      return ListView.builder(
+          itemCount: snapshotData.docs.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RecipeScreen(
+                              recipeIndex: snapshotData.docs[index],
+                            )));
+              },
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundImage:
+                      NetworkImage(snapshotData.docs[index].data()['imgUrl']),
+                ),
+                title: Text(
+                  snapshotData.docs[index].data()['name'],
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: defaultSize * 2, //20
                   ),
-                )
-              ]),
+                ),
+                subtitle: Text(snapshotData.docs[index].data()['chef'],
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: defaultSize * 1.5, //15
+                    )),
+              ),
+            );
+          });
+    }
+
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.clear),
+        onPressed: () {
+          setState(() {
+            isExecuted = false;
+            searchController.clear();
+          });
+        },
+      ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          GetBuilder<DataController>(
+            init: DataController(),
+            builder: (val) {
+              return IconButton(
+                icon: SvgPicture.asset("assets/icons/search.svg"),
+                onPressed: () {
+                  val.queryData(searchController.text).then((value) {
+                    snapshotData = value;
+                    setState(() {
+                      isExecuted = true;
+                    });
+                  });
+                },
+              );
+            },
+          )
+        ],
+        title: TextField(
+          style: TextStyle(color: kPrimaryColor),
+          decoration: InputDecoration(
+              hintText: 'Search Recipe',
+              hintStyle: TextStyle(color: kPrimaryColor)),
+          controller: searchController,
+        ),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: SvgPicture.asset("assets/icons/back.svg"),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
-      itemCount: suggestionList.length,
+      body: isExecuted
+          ? searchData()
+          : Container(
+              child: Center(
+                child: Text(
+                  'Search any recipe',
+                  style: TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: defaultSize * 4,
+                  ),
+                ),
+              ),
+            ),
     );
+  }
+}
+
+class DataController extends GetxController {
+  Future getData(String collection) async {
+    final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    QuerySnapshot snapshot =
+        await firebaseFirestore.collection(collection).get();
+    return snapshot.docs;
+  }
+
+  Future queryData(String queryString) async {
+    return FirebaseFirestore.instance
+        .collection('Recipe')
+        .where('name', isGreaterThanOrEqualTo: queryString)
+        .where('name', isLessThanOrEqualTo: queryString + '\uf8ff')
+        .get();
   }
 }

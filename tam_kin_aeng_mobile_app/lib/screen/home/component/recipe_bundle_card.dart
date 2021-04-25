@@ -66,29 +66,6 @@ class RecipeBundleCard extends StatelessWidget {
                       iconSrc: "assets/icons/chef.svg",
                       text: "${recipeBundle.chefs} Chefs"),
                   Spacer(),
-                  // Button linked to recipe landing page
-                  // TextButton(
-                  //   onPressed: () {
-                  //     Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //             builder: (context) => RecipeLanding()));
-                  //   },
-                  //   child: Text(
-                  //     'View Detail',
-                  //     style: TextStyle(
-                  //         fontSize: defaultSize * 1.5, color: Colors.white),
-                  //   ),
-                  //   style: ButtonStyle(
-                  //       backgroundColor:
-                  //           MaterialStateProperty.all<Color>(Colors.teal),
-                  //       shape:
-                  //           MaterialStateProperty.all<RoundedRectangleBorder>(
-                  //               RoundedRectangleBorder(
-                  //         borderRadius:
-                  //             BorderRadius.circular(defaultSize * 1.8),
-                  //       ))),
-                  // ),
                 ],
               ),
             )),

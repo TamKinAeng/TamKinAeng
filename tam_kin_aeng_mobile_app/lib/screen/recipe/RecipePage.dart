@@ -59,7 +59,8 @@ class RecipeScreen extends StatelessWidget {
           IconButton(
             icon: SvgPicture.asset("assets/icons/search.svg"),
             onPressed: () {
-              showSearch(context: context, delegate: DataSearch());
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DataSearch()));
             },
           ),
           SizedBox(

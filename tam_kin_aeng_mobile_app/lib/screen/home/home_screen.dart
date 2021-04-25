@@ -45,12 +45,6 @@ class HomeScreen extends StatelessWidget {
   AppBar buildAppBar(BuildContext context) {
     double defaultSize = SizeConfig.defaultSize;
     return AppBar(
-      // This is icons and logo on our app bar
-      // leading: IconButton(
-      //   icon: SvgPicture.asset("assets/icons/menu.svg"),
-      //   onPressed: () {},
-      // ),
-
       // On Android by default its false
       centerTitle: true,
       title: Image.asset(
@@ -62,7 +56,8 @@ class HomeScreen extends StatelessWidget {
         IconButton(
           icon: SvgPicture.asset("assets/icons/search.svg"),
           onPressed: () {
-            showSearch(context: context, delegate: DataSearch());
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => DataSearch()));
           },
         ),
         SizedBox(
@@ -71,16 +66,12 @@ class HomeScreen extends StatelessWidget {
         )
       ],
       bottom: TabBar(
-        // indicatorPadding: EdgeInsets.all(defaultSize * 5),
-        // indicatorSize: TabBarIndicatorSize.label,
-
         indicator: BubbleTabIndicator(
             indicatorHeight: defaultSize * 3,
             indicatorColor: kPrimaryColor,
             tabBarIndicatorSize: TabBarIndicatorSize.tab),
         labelColor: Colors.white,
         unselectedLabelColor: Colors.grey,
-        // labelPadding: EdgeInsets.symmetric(horizontal: defaultSize * 1.5),
         isScrollable: true,
         tabs: [
           Tab(
