@@ -6,11 +6,13 @@ import '../constants.dart';
 class RoundedPasswordInput extends StatefulWidget {
   RoundedPasswordInput({
     Key key,
-    @required this.hint
+    @required this.hint,
+    @required this.controller,
   }) : super(key: key);
 
   String hint;
   bool isError = false;
+  TextEditingController controller;
   @override
   _RoundedPasswordInputState createState() => _RoundedPasswordInputState();
 }
@@ -20,6 +22,7 @@ class _RoundedPasswordInputState extends State<RoundedPasswordInput> {
   Widget build(BuildContext context) {
     return InputContainer(
         child: TextFormField(
+          controller: widget.controller,
           validator: (value) {
             if (value == null || value.isEmpty){
               setState(() {

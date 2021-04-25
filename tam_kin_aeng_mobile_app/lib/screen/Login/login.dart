@@ -59,8 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 12,
                       ))),
                   SizedBox(height: 10),
-                  RoundedInput(icon: Icons.mail, hint: 'E-mail Address',),
-                  RoundedPasswordInput(hint: 'Password'),
+                  RoundedInput(icon: Icons.mail, controller: _email, hint: 'E-mail Address',),
+                  RoundedPasswordInput(controller: _password, hint: 'Password'),
                   SizedBox(height: 10),
                   Text(
                     'Forgot Password?',
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     )),
                   ),
                   SizedBox(height: 10),
-                  RoundedButton(title:'Login',pagelink: HomeScreen(), formkey: _formKey,),
+                  RoundedButton(title:'Login',email: _email.text, password: _password.text ,pagelink: HomeScreen(), formkey: _formKey,),
                   SizedBox(height: 20),
                   Text("I don't have an account Sign up!"
                   ),

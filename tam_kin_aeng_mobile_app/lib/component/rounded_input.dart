@@ -8,11 +8,13 @@ class RoundedInput extends StatefulWidget {
     Key key,
     @required this.icon,
     @required this.hint,
+    @required this.controller,
   }) : super(key: key);
 
   IconData icon;
   String hint;
   bool isError = false;
+  TextEditingController controller;
   @override
   _RoundedInputState createState() => _RoundedInputState();
 }
@@ -22,6 +24,7 @@ class _RoundedInputState extends State<RoundedInput> {
   Widget build(BuildContext context) {
     return InputContainer(
         child: TextFormField(
+          controller: widget.controller ,
          validator: (value) {
             if (value == null || value.isEmpty 
             || RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+").hasMatch(value)){
