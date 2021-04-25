@@ -6,6 +6,7 @@ import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/component/layout.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/CookingPage.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/recipe/ingredientCheckbox.dart';
 
 class RecipeScreen extends StatelessWidget {
   final DocumentSnapshot recipeIndex;
@@ -27,9 +28,8 @@ class RecipeScreen extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CookingScreen(
-                    index: 0,
-                    RecipeDB: recipeIndex,
+                  builder: (context) => CheckboxList(
+                    IngredientDB: recipeIndex,
                   ),
                 ));
           },

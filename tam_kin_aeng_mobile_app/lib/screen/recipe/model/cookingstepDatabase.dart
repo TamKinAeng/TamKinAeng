@@ -6,6 +6,7 @@ import 'package:tam_kin_aeng_mobile_app/screen/recipe/CookingPage.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/FinishPage.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/RecipePage.dart';
 import 'package:custom_timer/custom_timer.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/recipe/ingredientCheckbox.dart';
 
 class ListCooking extends StatefulWidget {
   final int Index;
@@ -90,13 +91,26 @@ class _ListCookingState extends State<ListCooking> {
                       SizedBox(
                         height: 12.0,
                       ),
-                      FlatButton(
-                        child: Text(
-                          "Start",
-                          style: GoogleFonts.roboto(color: Colors.white),
-                        ),
-                        onPressed: () => widget._controller.start(),
-                        color: Colors.green,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          FlatButton(
+                            child: Text(
+                              "Start",
+                              style: GoogleFonts.roboto(color: Colors.white),
+                            ),
+                            onPressed: () => widget._controller.start(),
+                            color: Colors.green,
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "Reset",
+                              style: GoogleFonts.roboto(color: Colors.white),
+                            ),
+                            onPressed: () => widget._controller.reset(),
+                            color: Colors.red,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -104,6 +118,7 @@ class _ListCookingState extends State<ListCooking> {
                   child: Container(
                     height: MediaQuery.of(context).size.height / 6,
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         FloatingActionButton.extended(
                             label: Text("Back"),
@@ -121,8 +136,8 @@ class _ListCookingState extends State<ListCooking> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => RecipeScreen(
-                                        recipeIndex: widget.StepDB,
+                                      builder: (context) => CheckboxList(
+                                        IngredientDB: widget.StepDB,
                                       ),
                                     ));
                               }
@@ -148,7 +163,6 @@ class _ListCookingState extends State<ListCooking> {
                               }
                             }),
                       ],
-                      mainAxisAlignment: MainAxisAlignment.center,
                     ),
                   ),
                 )
