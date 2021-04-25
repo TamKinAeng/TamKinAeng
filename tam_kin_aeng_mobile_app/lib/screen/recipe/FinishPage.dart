@@ -41,28 +41,35 @@ class FinishScreen extends StatelessWidget {
         );
   }
 
-  AppBar buildAppBar(BuildContext context) {
-  double defaultSize = SizeConfig.defaultSize;
-  return AppBar(
-      // This is icons and logo on our app bar
-      // On Android by default its false
-      centerTitle: true,
-      title: Image.asset(
-        "assets/images/logoRevised.png",
-        height: defaultSize * 4,
-      ),
-      actions: <Widget>[
-        // Search Button
-        IconButton(
-          icon: SvgPicture.asset("assets/icons/search.svg"),
+ AppBar buildAppBar(BuildContext context) {
+    double defaultSize = SizeConfig.defaultSize;
+    return AppBar(
+        // This is icons and logo on our app bar
+        leading: IconButton(
+          icon: SvgPicture.asset("assets/icons/back.svg"),
           onPressed: () {
-            showSearch(context: context, delegate: DataSearch());
+            Navigator.pop(context);
           },
         ),
-        SizedBox(
-          // It means 5 because by out defaultSize = 10
-          width: SizeConfig.defaultSize * 0.5,
-        )
-      ]);
-}
+        // On Android by default its false
+        centerTitle: true,
+        title: Image.asset(
+          "assets/images/logoRevised.png",
+          height: defaultSize * 4,
+        ),
+        actions: <Widget>[
+          // Search Button
+          IconButton(
+            icon: SvgPicture.asset("assets/icons/search.svg"),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DataSearch()));
+            },
+          ),
+          SizedBox(
+            // It means 5 because by out defaultSize = 10
+            width: SizeConfig.defaultSize * 0.5,
+          )
+        ]);
+  }
 }
