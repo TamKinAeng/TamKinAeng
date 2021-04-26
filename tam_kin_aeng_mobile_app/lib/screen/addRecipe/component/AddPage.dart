@@ -11,11 +11,16 @@ class AddPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Column(
+      body: SingleChildScrollView(
+        child: Column(
         children: [
           sLineTextField(),
           mLineTextField(),
+          cDropDownButton(),
+          lDropDownButton(),
+          iInteractList()
         ],
+        ),
       ),
       bottomNavigationBar: MyBottomNavBar(),
     );
@@ -103,3 +108,127 @@ class _SingleTextFieldState extends State<sLineTextField> {
   }
 }
 
+class cDropDownButton extends StatefulWidget {
+  cDropDownButton({Key key, this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _cDropDownState createState() => _cDropDownState();
+}
+
+class _cDropDownState extends State<cDropDownButton>{
+  String valueChoose;
+  List listItem = ["Thai","Indian","Italian","Global"];
+ @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(15)
+            ),
+            child: DropdownButton(
+              hint: Text("Catagory"),
+              icon: Icon(Icons.arrow_drop_down),
+              iconSize: 36,
+              isExpanded: true,
+              underline: SizedBox(),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 22
+              ),
+              value: valueChoose,
+              onChanged: (newValue){
+                setState(() {
+                  valueChoose = newValue;
+                });
+              },
+              items: listItem.map((valueItem) {
+                return DropdownMenuItem(
+                  value: valueItem,
+                  child: Text(valueItem),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      )
+    );
+  }
+}
+
+class lDropDownButton extends StatefulWidget {
+  lDropDownButton({Key key, this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _lDropDownState createState() => _lDropDownState();
+}
+
+class _lDropDownState extends State<lDropDownButton>{
+  String valueChoose;
+  List listItem = ["Easy","Medium","Hard"];
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(15)
+              ),
+              child: DropdownButton(
+                hint: Text("Level"),
+                icon: Icon(Icons.arrow_drop_down),
+                iconSize: 36,
+                isExpanded: true,
+                underline: SizedBox(),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 22
+                ),
+                value: valueChoose,
+                onChanged: (newValue){
+                  setState(() {
+                    valueChoose = newValue;
+                  });
+                },
+                items: listItem.map((valueItem) {
+                  return DropdownMenuItem(
+                    value: valueItem,
+                    child: Text(valueItem),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        )
+    );
+  }
+}
+
+class iInteractList extends StatefulWidget {
+  iInteractList({Key key, this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _iInteractListState createState() => _iInteractListState();
+}
+
+class _iInteractListState extends State<iInteractList> {
+
+  @override
+  Widget build(BuildContext context) {
+    
+    return Container(
+
+    );
+  }
+}
