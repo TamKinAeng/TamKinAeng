@@ -37,6 +37,7 @@ dependencies:
   bubble_tab_indicator: ^0.1.5
   custom_timer: ^0.0.3
   get: ^4.1.4
+  image_picker: ^0.4.10
 
 dev_dependencies:
   flutter_test:

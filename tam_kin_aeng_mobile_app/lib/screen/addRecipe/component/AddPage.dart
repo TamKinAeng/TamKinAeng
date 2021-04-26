@@ -1,8 +1,14 @@
+import 'dart:ffi';
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/body.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 import 'package:tam_kin_aeng_mobile_app/screen/addRecipe/addRecipe.dart';
 
@@ -16,9 +22,12 @@ class AddPage extends StatelessWidget {
         children: [
           sLineTextField(),
           mLineTextField(),
+          iInteractList(),
           cDropDownButton(),
           lDropDownButton(),
-          iInteractList()
+          cInteractList(),
+          UploadImage(),
+          SaveRecipe(),
         ],
         ),
       ),
@@ -223,12 +232,173 @@ class iInteractList extends StatefulWidget {
 }
 
 class _iInteractListState extends State<iInteractList> {
+  final List names = ['Apple','Chicken','Pork'];
+
+
+
+  TextEditingController nameController = TextEditingController();
+
+  void addItemToList(){
+    setState(() {
+      names.insert(0,nameController.text);
+
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Ingredient',
+              ),
+            ),
+          ),
+          RaisedButton(
 
+            child: Text('Add'),
+            onPressed: () {
+              addItemToList();
+            },
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.symmetric(vertical: 12,horizontal: 16),
+            title: Text(names.toString(), style: TextStyle(fontSize: 20)),
+          ),
+        ],
+      )
+    );
+  }
+}
+
+class cInteractList extends StatefulWidget {
+  cInteractList({Key key, this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _cInteractListState createState() => _cInteractListState();
+}
+
+class _cInteractListState extends State<cInteractList> {
+  final List names = ['“In a small pot, stir oats, milk, berries, cinnamon, vanilla extract, maple syrup, and salt over medium high heat.”'];
+
+
+  TextEditingController nameController = TextEditingController();
+
+  void addItemToList() {
+    setState(() {
+      names.insert(0, nameController.text);
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Cooking Step',
+                ),
+              ),
+            ),
+            RaisedButton(
+              child: Text('Add'),
+              onPressed: () {
+                addItemToList();
+              },
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.symmetric(vertical: 12,horizontal: 16),
+              title: Text(names.toString(), style: TextStyle(fontSize: 20)),
+            ),
+          ],
+        )
+    );
+  }
+}
+
+class UploadImage extends StatefulWidget {
+  UploadImage({Key key, this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _UploadImageState createState() => _UploadImageState();
+}
+class _UploadImageState extends State<UploadImage> {
+  static final String uploadEndPoint =
+      'http://localhost/flutter_test/upload_image.php';
+  Future<File> file;
+  String status = '';
+  String base64Image;
+  File tmpFile;
+  String errMessage = 'Error Uploading Image';
+
+  chooseImage() {
+    setState(() {
+      file = ImagePicker.pickImage(source: ImageSource.gallery);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(30.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          OutlineButton(
+            onPressed: chooseImage,
+            child: Text('Choose Image'),
+          ),
+          SizedBox(
+            height: 20.0,
+          )
+        ],
+      ),
+    );
+  }
+}
+class SaveRecipe extends StatefulWidget {
+  SaveRecipe({Key key, this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _SaveRecipeState createState() => _SaveRecipeState();
+}
+
+class _SaveRecipeState extends State<SaveRecipe> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Column(
+      children: <Widget>[
+        RaisedButton(
+          color: Colors.green,
+          child: Text('Save',style: TextStyle(
+            color: Colors.white
+          ),),
+          onPressed: () {
+
+          },
+        ),
+      ],
+    ),
     );
   }
 }
