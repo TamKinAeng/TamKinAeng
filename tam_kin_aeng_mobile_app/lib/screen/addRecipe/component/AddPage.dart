@@ -348,7 +348,7 @@ class _UploadImageState extends State<UploadImage> {
 
   chooseImage() {
     setState(() {
-      file = ImagePicker.pickImage(source: ImageSource.gallery);
+      file = ImagePicker.platform.pickImage(source: ImageSource.gallery) as Future<File>;
     });
   }
 
