@@ -124,11 +124,8 @@ class _registerScreenState extends State<registerScreen> {
   Widget _buildBirthDateField() {
     return Column(
       children: <Widget>[
-        Text(_birthdate == null
-            ? 'Nothing has been picked yet'
-            : _birthdate.toString()),
         RaisedButton(
-          child: Text('Pick a date'),
+          child: Text(_birthdate == null ? 'Pick a date' : _birthdate.toString()),
           onPressed: () {
             showDatePicker(
                     context: context,
@@ -138,10 +135,11 @@ class _registerScreenState extends State<registerScreen> {
                 .then((date) {
               setState(() {
                 _birthdate = date.toString().substring(0, 10);
+                
               });
             });
           },
-        )
+        ),
       ],
     );
   }
@@ -154,7 +152,7 @@ class _registerScreenState extends State<registerScreen> {
             child: Form(
               key: _formKey,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  /* crossAxisAlignment: CrossAxisAlignment.center, */
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
@@ -167,7 +165,7 @@ class _registerScreenState extends State<registerScreen> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    Text('Please login before you can access the main page',
+                    Text("If you don't have account, you can register now",
                         style: GoogleFonts.roboto(
                             textStyle: TextStyle(
                           fontSize: 12,
