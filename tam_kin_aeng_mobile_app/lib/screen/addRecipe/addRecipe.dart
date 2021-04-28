@@ -18,7 +18,7 @@ class AddRecipe extends StatelessWidget {
       body: AddRecipeBody(),
       //button for add the recipe page
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => AddPage())); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => addpageScreen())); },
         child: const Icon(Icons.edit),
         backgroundColor: Color(0xFF5D111B),
       ),

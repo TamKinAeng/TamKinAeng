@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:convert';
@@ -12,332 +13,241 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:tam_kin_aeng_mobile_app/screen/addRecipe/addRecipe.dart';
 
-class AddPage extends StatelessWidget {
+
+class addpageScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(context),
-      body: SingleChildScrollView(
-        child: Column(
-        children: [
-          sLineTextField(),
-          mLineTextField(),
-          iInteractList(),
-          cDropDownButton(),
-          lDropDownButton(),
-          cInteractList(),
-          UploadImage(),
-          SaveRecipe(),
-        ],
-        ),
-      ),
-      bottomNavigationBar: MyBottomNavBar(),
-    );
-  }
-
-
-
-// Refactor -> Extract method from AppBar
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      // This is icons and logo on our app bar
-        leading: IconButton(
-          icon: SvgPicture.asset("assets/icons/back.svg"),
-          //back icon go back to add recipe body
-          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => AddRecipe()));},
-        ),
-        // On Android by default its false
-        centerTitle: true,
-        title: Image.asset("assets/images/logo.png"),
-        actions: <Widget>[
-          SizedBox(
-            // It means 5 because by out defaultSize = 10
-            width: SizeConfig.defaultSize * 0.5,
-          )
-        ]);
-  }
+  _addpageScreenState createState() => _addpageScreenState();
 }
 
-// Multi-line text field widget for description
-// StatefulWidget is a widget that has mutable state.
-class mLineTextField extends StatefulWidget {
-  mLineTextField({Key key}) : super(key: key);
-
+class _addpageScreenState extends State<addpageScreen> {
   @override
-  createState() => _MultiTextFieldState();
+  String _foodName;
+  String _description;
+  String _ingredient;
+  String _category;
+  String _level;
+  String _cookingStep;
+  String _chooseImage;
 
-}
-class sLineTextField extends StatefulWidget {
-  sLineTextField({Key key}) : super(key: key);
+  TextEditingController foodname = TextEditingController();
+  TextEditingController description = TextEditingController();
 
-  @override
-  createState() => _SingleTextFieldState();
-
-}
-// It is the logic for 'StatefulWidget'
-class _MultiTextFieldState extends State<mLineTextField> {
-
-  final TextEditingController _multilineTextFieldcontroller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Widget _buildFoodNameField() {
     return Container(
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
-          TextField(
+          TextFormField(
+            controller: foodname,
+            decoration: InputDecoration(
+              labelText: 'Food Name',
+            ),
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please fill your food name';
+              } else
+                return null;
+            },
+            onSaved: (String value) {
+              _foodName = value;
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDescriptionField() {
+    return Container(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          TextFormField(
+            controller: description,
             maxLines: 4,
             decoration: InputDecoration(
-              hintText: 'Description',
+              labelText: 'Description',
             ),
-          )
-        ],
-      ),
-    );
-  }
-}
-class _SingleTextFieldState extends State<sLineTextField> {
-
-  final TextEditingController _singleTextFieldcontroller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'Food Name',
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class cDropDownButton extends StatefulWidget {
-  cDropDownButton({Key key, this.title}) : super(key: key);
-
-  final String title;
-  @override
-  _cDropDownState createState() => _cDropDownState();
-}
-
-class _cDropDownState extends State<cDropDownButton>{
-  String valueChoose;
-  List listItem = ["Thai","Indian","Italian","Global"];
- @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey, width: 1),
-              borderRadius: BorderRadius.circular(15)
-            ),
-            child: DropdownButton(
-              hint: Text("Catagory"),
-              icon: Icon(Icons.arrow_drop_down),
-              iconSize: 36,
-              isExpanded: true,
-              underline: SizedBox(),
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 22
-              ),
-              value: valueChoose,
-              onChanged: (newValue){
-                setState(() {
-                  valueChoose = newValue;
-                });
-              },
-              items: listItem.map((valueItem) {
-                return DropdownMenuItem(
-                  value: valueItem,
-                  child: Text(valueItem),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      )
-    );
-  }
-}
-
-class lDropDownButton extends StatefulWidget {
-  lDropDownButton({Key key, this.title}) : super(key: key);
-
-  final String title;
-  @override
-  _lDropDownState createState() => _lDropDownState();
-}
-
-class _lDropDownState extends State<lDropDownButton>{
-  String valueChoose;
-  List listItem = ["Easy","Medium","Hard"];
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(15)
-              ),
-              child: DropdownButton(
-                hint: Text("Level"),
-                icon: Icon(Icons.arrow_drop_down),
-                iconSize: 36,
-                isExpanded: true,
-                underline: SizedBox(),
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 22
-                ),
-                value: valueChoose,
-                onChanged: (newValue){
-                  setState(() {
-                    valueChoose = newValue;
-                  });
-                },
-                items: listItem.map((valueItem) {
-                  return DropdownMenuItem(
-                    value: valueItem,
-                    child: Text(valueItem),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-        )
-    );
-  }
-}
-
-class iInteractList extends StatefulWidget {
-  iInteractList({Key key, this.title}) : super(key: key);
-
-  final String title;
-  @override
-  _iInteractListState createState() => _iInteractListState();
-}
-
-class _iInteractListState extends State<iInteractList> {
-  final List names = ['Apple','Chicken','Pork'];
-
-
-
-  TextEditingController nameController = TextEditingController();
-
-  void addItemToList(){
-    setState(() {
-      names.insert(0,nameController.text);
-
-    });
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Ingredient',
-              ),
-            ),
-          ),
-          RaisedButton(
-
-            child: Text('Add'),
-            onPressed: () {
-              addItemToList();
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please fill your description';
+              } else
+                return null;
             },
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(vertical: 12,horizontal: 16),
-            title: Text(names.toString(), style: TextStyle(fontSize: 20)),
-          ),
+            onSaved: (String value) {
+              _description = value;
+            },
+          )
         ],
-      )
+      ),
     );
   }
-}
 
-class cInteractList extends StatefulWidget {
-  cInteractList({Key key, this.title}) : super(key: key);
+  final List IngredientList = [''];
+  TextEditingController IngredientController = TextEditingController();
 
-  final String title;
-  @override
-  _cInteractListState createState() => _cInteractListState();
-}
-
-class _cInteractListState extends State<cInteractList> {
-  final List names = ['“In a small pot, stir oats, milk, berries, cinnamon, vanilla extract, maple syrup, and salt over medium high heat.”'];
-
-
-  TextEditingController nameController = TextEditingController();
-
-  void addItemToList() {
+  void addIngredientToList() {
     setState(() {
-      names.insert(0, nameController.text);
+      IngredientList.insert(0, IngredientController.text);
     });
   }
 
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildIngredientField() {
     return Container(
         child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Cooking Step',
-                ),
-              ),
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: TextFormField(
+            controller: IngredientController,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Ingredient',
             ),
-            RaisedButton(
-              child: Text('Add'),
-              onPressed: () {
-                addItemToList();
-              },
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.symmetric(vertical: 12,horizontal: 16),
-              title: Text(names.toString(), style: TextStyle(fontSize: 20)),
-            ),
-          ],
-        )
-    );
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Please tell me the ingredients';
+              } else
+                return null;
+            },
+            onSaved: (String value) {
+              _ingredient = value;
+            },
+          ),
+        ),
+        RaisedButton(
+          child: Text('Add'),
+          onPressed: () {
+            addIngredientToList();
+          },
+        ),
+        ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          title:
+              Text(IngredientList.toString(), style: TextStyle(fontSize: 20)),
+        ),
+      ],
+    ));
   }
-}
 
-class UploadImage extends StatefulWidget {
-  UploadImage({Key key, this.title}) : super(key: key);
+  List listCategoryItem = ["Thai", "Indian", "Italian", "Global"];
+  Widget _buildCategoryField() {
+    return Container(
+        child: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(15)),
+          child: DropdownButton(
+            hint: Text("Category"),
+            icon: Icon(Icons.arrow_drop_down),
+            iconSize: 36,
+            isExpanded: true,
+            underline: SizedBox(),
+            style: TextStyle(color: Colors.black, fontSize: 22),
+            value: _category,
+            onChanged: (newValue) {
+              setState(() {
+                _category = newValue;
+              });
+            },
+            items: listCategoryItem.map((valueItem) {
+              return DropdownMenuItem(
+                value: valueItem,
+                child: Text(valueItem),
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    ));
+  }
 
-  final String title;
-  @override
-  _UploadImageState createState() => _UploadImageState();
-}
-class _UploadImageState extends State<UploadImage> {
+  List listLevelItem = ["Easy", "Medium", "Hard"];
+  Widget _buildLevelField() {
+    return Container(
+        child: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          padding: const EdgeInsets.only(left: 16, right: 16),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(15)),
+          child: DropdownButton(
+            hint: Text("Level"),
+            icon: Icon(Icons.arrow_drop_down),
+            iconSize: 36,
+            isExpanded: true,
+            underline: SizedBox(),
+            style: TextStyle(color: Colors.black, fontSize: 22),
+            value: _level,
+            onChanged: (newValue) {
+              setState(() {
+                _level = newValue;
+              });
+            },
+            items: listLevelItem.map((valueItem) {
+              return DropdownMenuItem(
+                value: valueItem,
+                child: Text(valueItem),
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    ));
+  }
+
+  final List CookingStepList = [''];
+  TextEditingController CookingStepController = TextEditingController();
+  void addCookingStepToList() {
+    setState(() {
+      CookingStepList.insert(0, CookingStepController.text);
+    });
+  }
+
+  Widget _buildCookingStep() {
+    return Container(
+        child: Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: TextFormField(
+              controller: CookingStepController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Cooking Step',
+              ),
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return 'Please tell me the cooking step';
+                } else
+                  return null;
+              },
+              onSaved: (String value) {
+                _cookingStep = value;
+              }),
+        ),
+        RaisedButton(
+          child: Text('Add'),
+          onPressed: () {
+            addCookingStepToList();
+          },
+        ),
+        ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          title:
+              Text(CookingStepList.toString(), style: TextStyle(fontSize: 20)),
+        ),
+      ],
+    ));
+  }
+
   static final String uploadEndPoint =
       'http://localhost/flutter_test/upload_image.php';
   Future<File> file;
@@ -348,12 +258,12 @@ class _UploadImageState extends State<UploadImage> {
 
   chooseImage() {
     setState(() {
-      file = ImagePicker.platform.pickImage(source: ImageSource.gallery) as Future<File>;
+      file = ImagePicker.platform.pickImage(source: ImageSource.gallery)
+          as Future<File>;
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildChooseImageField() {
     return Container(
       padding: EdgeInsets.all(30.0),
       child: Column(
@@ -370,35 +280,66 @@ class _UploadImageState extends State<UploadImage> {
       ),
     );
   }
-}
-class SaveRecipe extends StatefulWidget {
-  SaveRecipe({Key key, this.title}) : super(key: key);
 
-  final String title;
-  @override
-  _SaveRecipeState createState() => _SaveRecipeState();
-}
-
-class _SaveRecipeState extends State<SaveRecipe> {
-
-
+  CollectionReference ref = FirebaseFirestore.instance.collection('AddRecipe');
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-      children: <Widget>[
-        RaisedButton(
-          color: Colors.green,
-          child: Text('Save',style: TextStyle(
-            color: Colors.white
-          ),),
-          onPressed: () {
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildFoodNameField(),
+            _buildDescriptionField(),
+            _buildIngredientField(),
+            _buildCategoryField(),
+            _buildLevelField(),
+            _buildCookingStep(),
+            _buildChooseImageField(),
+            RaisedButton(
+              color: Colors.green,
+              child: Text(
+                'Save',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                ref.add({
+                  'foodname': _foodName.toString(),
+                  'description': _description.toString(),
+                  'ingredient': _ingredient.toString(),
+                  'category': _category.toString(),
+                  'level': _level.toString(),
+                  'cookingStep': _cookingStep.toString(),
+                  'chooseimage': file.toString(),
+                }).whenComplete(() => Navigator.pop(context));
+              },
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: MyBottomNavBar(),
+    );
+  }
 
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+        // This is icons and logo on our app bar
+        leading: IconButton(
+          icon: SvgPicture.asset("assets/icons/back.svg"),
+          //back icon go back to add recipe body
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => AddRecipe()));
           },
         ),
-      ],
-    ),
-    );
+        // On Android by default its false
+        centerTitle: true,
+        title: Image.asset("assets/images/logo.png"),
+        actions: <Widget>[
+          SizedBox(
+            // It means 5 because by out defaultSize = 10
+            width: SizeConfig.defaultSize * 0.5,
+          )
+        ]);
   }
 }

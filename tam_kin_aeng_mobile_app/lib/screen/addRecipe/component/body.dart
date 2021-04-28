@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 class AddRecipeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Scaffold(
+      body: SingleChildScrollView(
       child: Column(children: [
         Container(
             margin: EdgeInsets.all(10),
@@ -15,7 +16,8 @@ class AddRecipeBody extends StatelessWidget {
                       fontSize: 32,
                     )))),
 
-      ]
+          ]
+        ),
       ),
     );
   }
