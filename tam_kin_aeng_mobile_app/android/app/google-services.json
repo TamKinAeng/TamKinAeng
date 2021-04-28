@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1093195174889",
+    "project_id": "tamkinaeng-3d1af",
+    "storage_bucket": "tamkinaeng-3d1af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093195174889:android:30ed0e86b0be3a8721f178",
+        "android_client_info": {
+          "package_name": "com.example.tam_kin_aeng_mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1093195174889-ncddicg13qg2hpv3qm4kjp73569tkl8f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADK1cVZBFdQfsV349SrTLNZltpqN1OyHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1093195174889-ncddicg13qg2hpv3qm4kjp73569tkl8f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
