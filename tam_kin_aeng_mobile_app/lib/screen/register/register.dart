@@ -185,18 +185,19 @@ class _registerScreenState extends State<registerScreen> {
                   _buildGenderField(),
                   _buildBirthDateField(),
                   SizedBox(height: 10),
-                  RaisedButton(
+                  TextButton(
                       child: Text('Submit',
                           style: TextStyle(color: Colors.red, fontSize: 16)),
                       onPressed: () async {
                         print(_formKey.currentState.validate());
                         if (_formKey.currentState.validate()) {
                           try {
+                            print('test');
                             FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
                             await _firebaseAuth.createUserWithEmailAndPassword(
                               email: _email,
-                              password: _password,
-                            );
+                              password: _password,                          
+                            ).then((value) => print('testinfo'));
                             Navigator.push(
                               context,
                               MaterialPageRoute(
