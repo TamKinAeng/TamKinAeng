@@ -151,6 +151,7 @@ class _registerScreenState extends State<registerScreen> {
   }
 
   Widget build(BuildContext context) {
+    FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     return Scaffold(
       appBar: buildAppBar(context),
         body: SingleChildScrollView(
@@ -189,15 +190,15 @@ class _registerScreenState extends State<registerScreen> {
                       child: Text('Submit',
                           style: TextStyle(color: Colors.red, fontSize: 16)),
                       onPressed: () async {
-                        print(_formKey.currentState.validate());
                         if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
                           try {
                             print('test');
-                            FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+                            print(_email+"email test test");
                             await _firebaseAuth.createUserWithEmailAndPassword(
                               email: _email,
                               password: _password,                          
-                            ).then((value) => print('testinfo'));
+                            ).then((value) => print('testinfo'));/*  */
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -207,14 +208,6 @@ class _registerScreenState extends State<registerScreen> {
                             print(e.message);
                           }
 
-                          _formKey.currentState.save();
-
-                          print(_email);
-                          print(_password);
-                          print(_firstname);
-                          print(_lastname);
-                          print(_gender);
-                          print(_birthdate);
                         } else {
                           print("hello12");
                           ScaffoldMessenger.of(context).showSnackBar(
