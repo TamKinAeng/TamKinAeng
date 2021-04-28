@@ -8,7 +8,7 @@ import 'package:tam_kin_aeng_mobile_app/component/rounded_input.dart';
 import 'package:tam_kin_aeng_mobile_app/component/rounded_password_input.dart';
 import 'package:tam_kin_aeng_mobile_app/constants.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/register/register.dart';
-
+import 'package:tam_kin_aeng_mobile_app/screen/forgot/forgot.dart';
 import '../home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -65,15 +65,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   RoundedInput(icon: Icons.mail, controller: _email, hint: 'E-mail Address',),
                   RoundedPasswordInput(controller: _password, hint: 'Password'),
                   SizedBox(height: 5),
-                  Text(
-                    'Forgot Password?',
-                    style: GoogleFonts.roboto(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) {return forgotScreen();}));},
+                        child: Text(
+                        "Forgot passward?         ",
+                        style: GoogleFonts.roboto(
                         textStyle: TextStyle(
-                      fontSize: 12,
-                    )),
+                      fontSize: 17.5,
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.bold,
+                      )
+                      
+                      ),
+                      ),
+                      )
+                    ],
                   ),
-                  SizedBox(height: 5),
+                  SizedBox(height: 10),
                   RoundedButton(title:'Login',email: _email.text, password: _password.text ,pagelink: HomeScreen(), formkey: _formKey,),
+                  SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -91,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         "Sign up!",
                         style: GoogleFonts.roboto(
                         textStyle: TextStyle(
-                      fontSize: 20,
+                      fontSize: 17.5,
                       color: kPrimaryColor,
                       fontWeight: FontWeight.bold,
                       )
