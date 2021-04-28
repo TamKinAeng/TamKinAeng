@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/learn%20how%20to%20use/equipPage.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/profile/profile_screen.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/addRecipe/addRecipe.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/learn how to use/equipPage.dart';
 
 class NavItem {
   final int id;
@@ -39,16 +41,18 @@ class NavItems extends ChangeNotifier {
     ),
     NavItem(
       id: 2,
-      icon: "assets/icons/list.svg",
+      icon: "assets/icons/heart.svg",
       destination: AddRecipe(),
     ),
     NavItem(
       id: 3,
-      icon: "assets/icons/camera.svg",
+      icon: "assets/icons/library_add.svg",
+      destination: AddRecipe(),
     ),
     NavItem(
       id: 4,
-      icon: "assets/icons/chef_nav.svg",
+      icon: "assets/icons/pot.svg",
+      destination: equipPage(),
     ),
     NavItem(
       id: 5,

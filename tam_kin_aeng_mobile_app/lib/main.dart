@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/learn%20how%20to%20use/equipPage.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/learn how to use/equipPage.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/register/register.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/Login/login.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
