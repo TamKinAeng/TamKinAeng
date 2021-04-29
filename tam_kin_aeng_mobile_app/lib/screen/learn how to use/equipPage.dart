@@ -22,7 +22,7 @@ class equipPage extends StatelessWidget {
               'Learn How to Use',
               style: GoogleFonts.roboto(
                   textStyle: TextStyle(
-                      fontSize: 22,
+                      fontSize: 30,
                       color: Color(0xFF2B2B2B),
                       fontWeight: FontWeight.bold)),
             ),

@@ -334,7 +334,8 @@ class _addpageScreenState extends State<addpageScreen> {
         ),
         // On Android by default its false
         centerTitle: true,
-        title: Image.asset("assets/images/logo.png"),
+        title: Image.asset("assets/images/logoRevised.png",
+        height: 37,),
         actions: <Widget>[
           SizedBox(
             // It means 5 because by out defaultSize = 10
