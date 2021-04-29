@@ -9,11 +9,13 @@ class AddRecipeBody extends StatelessWidget {
       body: SingleChildScrollView(
       child: Column(children: [
         Container(
-            margin: EdgeInsets.all(10),
+            padding: const EdgeInsets.only(left: 20.0),
             child: Text('Add Recipe',
                 style: GoogleFonts.roboto(
                     textStyle: TextStyle(
-                      fontSize: 32,
+                      fontSize: 30,
+                      color: Color(0xFF2B2B2B),
+                      fontWeight: FontWeight.bold
                     )))),
 
           ]

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/favourite/favourite.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/learn%20how%20to%20use/equipPage.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/profile/profile_screen.dart';
@@ -42,7 +43,7 @@ class NavItems extends ChangeNotifier {
     NavItem(
       id: 2,
       icon: "assets/icons/heart.svg",
-      destination: AddRecipe(),
+      destination: favouritePage(),
     ),
     NavItem(
       id: 3,
