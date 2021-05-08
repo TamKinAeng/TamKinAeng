@@ -37,6 +37,7 @@ class _DataSearchState extends State<DataSearch> {
                 leading: CircleAvatar(
                   backgroundImage:
                       NetworkImage(snapshotData.docs[index].data()['imgUrl']),
+                  backgroundColor: Colors.transparent,
                 ),
                 title: Text(
                   snapshotData.docs[index].data()['name'],
@@ -59,6 +60,7 @@ class _DataSearchState extends State<DataSearch> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.clear),
+        backgroundColor: kPrimaryColor,
         onPressed: () {
           setState(() {
             isExecuted = false;

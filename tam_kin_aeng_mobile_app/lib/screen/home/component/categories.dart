@@ -42,7 +42,6 @@ class CategoriesData extends StatelessWidget {
         if (!snapshot.hasData) {
           return Text('Loading...');
         }
-
         return Container(
           height: defaultSize * 3, //30
           child: ListView.builder(

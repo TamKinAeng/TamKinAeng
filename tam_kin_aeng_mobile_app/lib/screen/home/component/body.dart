@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tam_kin_aeng_mobile_app/models/RecipeBundle.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
@@ -7,33 +8,31 @@ import 'recipe_bundle_card.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(SizeConfig.defaultSize * 2), //20
-              child: GridView.builder(
-                itemCount: recipeBundles.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  // For both vertical and horizontal view
-                  crossAxisCount:
-                      SizeConfig.orientation == Orientation.landscape ? 2 : 1,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing:
-                      SizeConfig.orientation == Orientation.landscape
-                          ? SizeConfig.defaultSize * 2
-                          : 0,
-                  childAspectRatio: 1.65,
+    return StreamBuilder<QuerySnapshot>(
+        stream:
+            FirebaseFirestore.instance.collection('RecipeBundle').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Text('Loading...');
+          }
+          return SafeArea(
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: SizedBox(
+                    height: SizeConfig.defaultSize * 1.5,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.docs.length,
+                      itemBuilder: (context, index) => RecipeBundleCard(
+                        index: snapshot.data.docs[index],
+                      ),
+                    ),
+                  ),
                 ),
-                itemBuilder: (context, index) => RecipeBundleCard(
-                  recipeBundle: recipeBundles[index],
-                ),
-              ),
+              ],
             ),
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 }
