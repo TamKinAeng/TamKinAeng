@@ -17,7 +17,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
@@ -31,16 +30,16 @@ class _LoginScreenState extends State<LoginScreen> {
     double defaultRegisterSize = size.height - (size.height * 0.1);
     return Scaffold(
         body: Stack(children: [
-      //Login Form
-      Align(
+        //Login Form
+        Align(
         alignment: Alignment.center,
         child: SingleChildScrollView(
             child: Form(
-              key: _formKey,
-                          child: Container(
-          width: size.width,
-          height: defaultLoginSize,
-          child: Column(
+          key: _formKey,
+          child: Container(
+            width: size.width,
+            height: defaultLoginSize,
+            child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -62,30 +61,43 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 12,
                       ))),
                   SizedBox(height: 5),
-                  RoundedInput(icon: Icons.mail, controller: _email, hint: 'E-mail Address',),
+                  RoundedInput(
+                    icon: Icons.mail,
+                    controller: _email,
+                    hint: 'E-mail Address',
+                  ),
                   RoundedPasswordInput(controller: _password, hint: 'Password'),
                   SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
-                        onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) {return forgotScreen();}));},
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return forgotScreen();
+                          }));
+                        },
                         child: Text(
-                        "Forgot passward?         ",
-                        style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                      fontSize: 17.5,
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                      )
-                      
-                      ),
-                      ),
+                          "Forgot passward?         ",
+                          style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                            fontSize: 17.5,
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                          )),
+                        ),
                       )
                     ],
                   ),
                   SizedBox(height: 10),
-                  RoundedButton(title:'Login',email: _email.text, password: _password.text ,pagelink: HomeScreen(), formkey: _formKey,),
+                  RoundedButton(
+                    title: 'Login',
+                    email: _email.text,
+                    password: _password.text,
+                    pagelink: HomeScreen(),
+                    formkey: _formKey,
+                  ),
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -93,30 +105,33 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         "Don't have an account ? ",
                         style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                      fontSize: 15,
-                      ),
-                      ),
+                          textStyle: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
                       ),
                       GestureDetector(
-                        onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) {return registerScreen();}));},
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return registerScreen();
+                          }));
+                        },
                         child: Text(
-                        "Sign up!",
-                        style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                      fontSize: 17.5,
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                      )
-                      
-                      ),
-                      ),
+                          "Sign up!",
+                          style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                            fontSize: 17.5,
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                          )),
+                        ),
                       )
                     ],
                   )
                 ]),
-        ),
-            )),
+          ),
+        )),
       )
     ]));
   }

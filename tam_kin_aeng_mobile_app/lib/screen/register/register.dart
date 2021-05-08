@@ -155,7 +155,7 @@ class _registerScreenState extends State<registerScreen> {
     return Scaffold(
       appBar: buildAppBar(context),
         body: SingleChildScrollView(
-      child: Container(
+        child: Container(
           margin: EdgeInsets.all(24),
           alignment: Alignment.center,
           child: Form(
@@ -187,7 +187,7 @@ class _registerScreenState extends State<registerScreen> {
                   _buildBirthDateField(),
                   SizedBox(height: 10),
                   TextButton(
-                      child: Text('Submit',
+                      child: Text('Register',
                           style: TextStyle(color: Colors.red, fontSize: 16)),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
@@ -208,6 +208,13 @@ class _registerScreenState extends State<registerScreen> {
                             print(e.message);
                           }
 
+
+                          print(_email);
+                          print(_password);
+                          print(_firstname);
+                          print(_lastname);
+                          print(_gender);
+                          print(_birthdate);
                         } else {
                           print("hello12");
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -226,14 +233,5 @@ AppBar buildAppBar(BuildContext context) {
           icon: SvgPicture.asset("assets/icons/back.svg"),
           //back icon go back to add recipe body
           onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));},
-        ),
-        // On Android by default its false
-        centerTitle: true,
-        title: Image.asset("assets/images/logo.png"),
-        actions: <Widget>[
-          SizedBox(
-            // It means 5 because by out defaultSize = 10
-            width: (0.5),
-          )
-        ]);
+        ),);
   }
