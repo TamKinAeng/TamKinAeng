@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/search.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/recipe/ingredientChecklist.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/component/layout.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
@@ -22,14 +23,15 @@ class RecipeScreen extends StatelessWidget {
           recipeRecieve: recipeIndex,
         ),
         floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Color.fromRGBO(60, 9, 108, 1),
           label: Text("Start Cooking!!"),
           onPressed: () {
             // go to cookingStep
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CheckboxList(
-                    IngredientDB: recipeIndex,
+                  builder: (context) => IngredientChecklist(
+                    RecipeDB: recipeIndex,
                   ),
                 ));
           },

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/recipeDatabase.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:provider/provider.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/ingredientDatabase.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/recipe/component/ShowComment.dart';
 
 class RecipeBody extends StatefulWidget {
   final DocumentSnapshot recipeRecieve;
@@ -23,8 +22,12 @@ class _RecipeBodyState extends State<RecipeBody> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    double defaultSize = SizeConfig.defaultSize;
     return StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance.collection('Recipe').doc(recipeDatababe.id).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('Recipe')
+            .doc(recipeDatababe.id)
+            .snapshots(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasData) {
@@ -91,8 +94,29 @@ class _RecipeBodyState extends State<RecipeBody> {
                             ])),
                     Container(
                         width: MediaQuery.of(context).size.width / 1.2,
-                        height: MediaQuery.of(context).size.height / 3,
+                        height: MediaQuery.of(context).size.height / 4,
                         child: ListIngredient(RecipeDB: recipeDatababe)),
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('Review & Comment',
+                                  style: GoogleFonts.roboto(
+                                      textStyle: TextStyle(
+                                    fontSize: 18,
+                                  )))
+                            ])),
+                    Container(
+                      height: MediaQuery.of(context).size.height / 4,
+                      child: CommentList(
+                        CommentDB: recipeDatababe,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      height: MediaQuery.of(context).size.height / 12,
+                    ),
                   ],
                 ),
               ),

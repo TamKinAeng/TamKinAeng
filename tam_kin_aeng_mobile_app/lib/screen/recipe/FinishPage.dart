@@ -1,38 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/search.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
-import 'package:tam_kin_aeng_mobile_app/screen/recipe/component/layout.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
-import 'package:tam_kin_aeng_mobile_app/screen/recipe/model/cookingstepDatabase.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/recipe/component/FinishRecipe.dart';
+
 
 class FinishScreen extends StatelessWidget {
+  final DocumentSnapshot finishDB;
+
+  const FinishScreen({Key key, this.finishDB}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
         appBar: buildAppBar(context),
-        body: Center(
-              child: Container(
-                margin: EdgeInsets.all(5),
-                child: Center(
-                  child: Column(children: [
-                    Text('Congrate!!',
-                        style: GoogleFonts.roboto(
-                            textStyle: TextStyle(
-                          fontSize: 60,
-                        )))]),
-                ),)),
-                // Go back to HomeScreen button
+        body: Container(child: FinishContent(finishDB: finishDB,)),
+        // Go back to HomeScreen button
         floatingActionButton: FloatingActionButton.extended(
-          label: Text("Finish!!"),
+          backgroundColor: Color.fromRGBO(60, 9, 108, 1),
+          label: Text("Finish"),
           onPressed: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen(),
-            ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ));
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -41,7 +36,7 @@ class FinishScreen extends StatelessWidget {
         );
   }
 
- AppBar buildAppBar(BuildContext context) {
+  AppBar buildAppBar(BuildContext context) {
     double defaultSize = SizeConfig.defaultSize;
     return AppBar(
         // This is icons and logo on our app bar
