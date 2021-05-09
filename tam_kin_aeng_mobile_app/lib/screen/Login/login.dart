@@ -37,7 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
           image: DecorationImage(
             image: AssetImage("assets/images/Login_Edited.png"),
             fit: BoxFit.cover,
-            ))),
+            ),
+            ),
+            ),
         //Login Form
         Align(
         alignment: Alignment.center,
@@ -46,16 +48,11 @@ class _LoginScreenState extends State<LoginScreen> {
           key: _formKey,
           child: Container(
             width: size.width,
-            height: defaultLoginSize,
+            height: size.height*1.1,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(''),
-                  Text(''),
-                  Text(''),
-                  Text(''),
-                  Text(''),
                   Text(
                     'Welcome to TamKinAeng',
                     style: GoogleFonts.righteous(
