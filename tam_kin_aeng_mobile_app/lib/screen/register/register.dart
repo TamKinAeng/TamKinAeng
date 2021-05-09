@@ -40,8 +40,7 @@ class _registerScreenState extends State<registerScreen> {
         
       ),
     child: TextFormField(
-        decoration: InputDecoration(
-          labelText: 'Email',
+        decoration: InputDecoration( hintText: 'Email',
             border: InputBorder.none,
             prefixIcon: Icon(Icons.email,
              color: kPrimaryColor
@@ -74,7 +73,7 @@ class _registerScreenState extends State<registerScreen> {
       ),
       child: TextFormField(
           decoration: InputDecoration(
-            labelText: 'Password',
+            hintText: 'Password',
             border: InputBorder.none,
             prefixIcon: Icon(Icons.lock,
             color: kPrimaryColor
@@ -106,7 +105,7 @@ class _registerScreenState extends State<registerScreen> {
       ),
       child: TextFormField(
           decoration: InputDecoration(
-            labelText: 'Firstname',
+             hintText: 'Firstname',
             border: InputBorder.none
             ),
           validator: (String value) {
@@ -134,7 +133,7 @@ class _registerScreenState extends State<registerScreen> {
       ),
     child: TextFormField(
         decoration: InputDecoration(
-          labelText: 'Lastname',
+          hintText: 'Lastname',
           border: InputBorder.none
           ),
         validator: (String value) {
@@ -163,16 +162,21 @@ class _registerScreenState extends State<registerScreen> {
     ); */
 
         Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          decoration: BoxDecoration(borderRadius: new BorderRadius.circular(40.0),
+          color: Colors.white
+          ),
+          
       child: new DropdownButton(
         iconEnabledColor: Colors.white,
-        dropdownColor: kSecondaryColor,
         style: GoogleFonts.roboto(
-          textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+          textStyle: TextStyle(color: Colors.black, fontSize: 18)),
           underline: Container(
-          height: 3,
+          height: 2,
           color: kSecondaryColor),
           hint: Text("Gender"),
-          icon: Icon(Icons.arrow_downward),
+          icon: Icon(Icons.arrow_downward, color: kSecondaryColor,),
           value: _gender,
           items: [
             DropdownMenuItem(

@@ -5,12 +5,22 @@ Future<void> userInfo(String _firstname, String _lastname, String _gender, Strin
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
   FirebaseAuth auth = FirebaseAuth.instance;
   String uid = auth.currentUser.uid.toString();
-  users.add({
-    'uid': uid,
+  users.doc(uid).set({
+    'Uid': uid,
     'Firstname': _firstname,
     'Lastname': _lastname,
     'Gender': _gender,
     'Birthdate': _birthdate
   });
   return;
+}
+
+Future<String> getUID() async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('Users').doc(auth.currentUser.uid).collection('AddRecipe');
+
+  users.doc(auth.currentUser.uid).get(
+    
+  );
+  return auth.currentUser.uid;
 }

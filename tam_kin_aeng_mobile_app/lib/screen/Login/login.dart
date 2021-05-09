@@ -31,6 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         body: Stack(children: <Widget>[
           Container(
+            width: double.infinity,
+            height: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/Login_Edited.png"),
