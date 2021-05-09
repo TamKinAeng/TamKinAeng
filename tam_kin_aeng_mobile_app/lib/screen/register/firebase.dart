@@ -21,6 +21,7 @@ Future<String> getUID() async {
 
   users.doc(auth.currentUser.uid).get(
     
+    
   );
   return auth.currentUser.uid;
 }

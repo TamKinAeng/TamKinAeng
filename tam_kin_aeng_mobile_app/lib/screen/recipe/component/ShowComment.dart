@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 
+
 class CommentList extends StatefulWidget {
   final DocumentSnapshot CommentDB;
 
@@ -13,6 +14,7 @@ class CommentList extends StatefulWidget {
 }
 
 class _CommentListState extends State<CommentList> {
+
   double defaultSize = SizeConfig.defaultSize;
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class _CommentListState extends State<CommentList> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text('Anonymous',
+                              Text(document["name"],
                                   style: GoogleFonts.roboto(
                                       textStyle: TextStyle(
                                     fontSize: 16,

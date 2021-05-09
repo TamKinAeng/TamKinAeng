@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/register/firebase.dart';
 
 class FinishContent extends StatefulWidget {
   final DocumentSnapshot finishDB;
@@ -71,6 +72,10 @@ class _FinishContentState extends State<FinishContent> {
 
   void _showRatingAppDialog() {
     final fb = FirebaseFirestore.instance.collection('Recipe').doc(widget.finishDB.id).collection('RecipeReview');
+    String name;
+    FirebaseFirestore.instance.collection("Users").doc(getUID().toString()).get().then((querySnapshot){
+      name = querySnapshot.data()["Firstname"];
+      });
     double defaultSize = SizeConfig.defaultSize;
     final _ratingDialog = RatingDialog(
       image: Image.asset("assets/images/logoRevised.png",
@@ -84,7 +89,7 @@ class _FinishContentState extends State<FinishContent> {
       onSubmitted: (response) {
         print('rating: ${response.rating}, '
             'comment: ${response.comment}');
-          fb.add({'rating': '${response.rating}','comment':'${response.comment}'});
+          fb.add({'rating': '${response.rating}','comment':'${response.comment}','name':name});
 
       },
     );

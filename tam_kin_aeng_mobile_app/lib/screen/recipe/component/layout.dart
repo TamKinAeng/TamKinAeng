@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -56,6 +57,46 @@ class _RecipeBodyState extends State<RecipeBody> {
                     Container(
                         margin: EdgeInsets.all(5),
                         child: Image.network(recipes['imgUrl'])),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                            child: Row(
+                          children: [
+                            if (recipes['dificulty'] == "low")
+                              SvgPicture.asset(
+                                "assets/icons/low_grey.svg",
+                                height: defaultSize * 2,
+                              ),
+                            if (recipes['dificulty'] == "medium")
+                              SvgPicture.asset(
+                                "assets/icons/med_grey.svg",
+                                height: defaultSize * 2,
+                              ),
+                            Text(" "+recipes['dificulty']+" level",
+                                style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                  fontSize: 16,
+                                ))),
+                          ],
+                        )),
+                        Container(
+                            child: Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/timer.png",
+                              height: defaultSize * 2,
+                            ),
+                            Text(" "+recipes['time'] + " Minutes",
+                                style: GoogleFonts.roboto(
+                                    textStyle: TextStyle(
+                                  fontSize: 16,
+                                ))),
+                          ],
+                        )),
+                        Container(child: Text(""),),
+                      ],
+                    ),
                     Container(
                         margin: EdgeInsets.all(10),
                         child: Row(
