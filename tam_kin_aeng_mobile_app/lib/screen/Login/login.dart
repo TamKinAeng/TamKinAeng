@@ -29,7 +29,13 @@ class _LoginScreenState extends State<LoginScreen> {
     double defaultLoginSize = size.height - (size.height * 0.2);
     double defaultRegisterSize = size.height - (size.height * 0.1);
     return Scaffold(
-        body: Stack(children: [
+        body: Stack(children: <Widget>[
+          Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/Login_Edited.png"),
+            fit: BoxFit.cover,
+            ))),
         //Login Form
         Align(
         alignment: Alignment.center,
@@ -43,14 +49,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/images/BakingCakes1.svg',
-                      width: 100, height: 180),
+                  Text(''),
+                  Text(''),
+                  Text(''),
+                  Text(''),
+                  Text(''),
                   Text(
                     'Welcome to TamKinAeng',
                     style: GoogleFonts.righteous(
                       textStyle: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                        fontSize: 26,
+                        color: Colors.white
                       ),
                     ),
                   ),
@@ -58,7 +68,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text('Please login before you can access the main page',
                       style: GoogleFonts.roboto(
                           textStyle: TextStyle(
-                        fontSize: 12,
+                        fontSize: 14,
+                        color: Colors.white
                       ))),
                   SizedBox(height: 5),
                   RoundedInput(
@@ -83,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: GoogleFonts.roboto(
                               textStyle: TextStyle(
                             fontSize: 17.5,
-                            color: kPrimaryColor,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                           )),
                         ),
@@ -106,7 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         "Don't have an account ? ",
                         style: GoogleFonts.roboto(
                           textStyle: TextStyle(
-                            fontSize: 15,
+                            fontSize: 15, 
+                            color: Colors.white
                           ),
                         ),
                       ),
@@ -122,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: GoogleFonts.roboto(
                               textStyle: TextStyle(
                             fontSize: 17.5,
-                            color: kPrimaryColor,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                           )),
                         ),

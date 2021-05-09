@@ -16,10 +16,10 @@ class InputContainer extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       width: size.width*0.8,
-      height: size.height*0.085,
+      height: size.height*0.07,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: kPrimaryColor.withAlpha(50)
+        borderRadius: BorderRadius.circular(40),
+        color: Colors.white
       ),
 
       child: child,

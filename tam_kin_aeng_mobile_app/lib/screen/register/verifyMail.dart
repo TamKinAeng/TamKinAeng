@@ -78,7 +78,7 @@ AppBar buildAppBar(BuildContext context) {
     backgroundColor: kPrimaryColor,
     // This is icons and logo on our app bar
     leading: IconButton(
-      icon: SvgPicture.asset("assets/icons/back.svg", color: Colors.white,),
+      icon: SvgPicture.asset("assets/icons/back.svg", color: Colors.white),
       //back icon go back to add recipe body
       onPressed: () {
         Navigator.push(
