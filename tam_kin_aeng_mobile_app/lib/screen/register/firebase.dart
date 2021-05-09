@@ -17,7 +17,7 @@ Future<void> userInfo(String _firstname, String _lastname, String _gender, Strin
 
 Future<String> getUID() async {
   FirebaseAuth auth = FirebaseAuth.instance;
-  CollectionReference users = FirebaseFirestore.instance.collection('Users').doc(auth.currentUser.uid).collection('AddRecipe');
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
   users.doc(auth.currentUser.uid).get(
     
