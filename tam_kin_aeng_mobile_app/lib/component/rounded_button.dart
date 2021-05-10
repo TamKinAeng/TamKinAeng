@@ -30,7 +30,7 @@ class RoundedButton extends StatelessWidget {
       onPressed: () async {
         print(formkey.currentState.validate());
         print("hello");
-        if (!formkey.currentState.validate()){
+        if (formkey.currentState.validate()){
           try { FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
           print("hello");
           print(email);

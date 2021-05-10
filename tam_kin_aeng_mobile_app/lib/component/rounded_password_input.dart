@@ -27,9 +27,8 @@ class _RoundedPasswordInputState extends State<RoundedPasswordInput> {
             if (value == null || value.isEmpty){
               setState(() {
                 widget.isError = true;
-                widget.hint = "Please enter your password";
+                widget.hint = "Enter your password";
               });
-              return "";
             }
             return null;
           },
