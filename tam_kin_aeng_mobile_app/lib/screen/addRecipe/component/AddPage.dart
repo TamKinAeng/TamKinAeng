@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'dart:ffi';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -15,22 +14,26 @@ import 'package:tam_kin_aeng_mobile_app/screen/addRecipe/addRecipe.dart';
 
 
 class addpageScreen extends StatefulWidget {
+  final DocumentSnapshot addrcpDB;
+
+  const addpageScreen({Key key, this.addrcpDB}) : super(key: key);
+
   @override
   _addpageScreenState createState() => _addpageScreenState();
 }
 
 class _addpageScreenState extends State<addpageScreen> {
   @override
-  String _foodName;
-  String _description;
+  // String _foodName;
+  // String _description;
   String _ingredient;
   String _category;
   String _level;
   String _cookingStep;
   String _chooseImage;
 
-  TextEditingController foodname = TextEditingController();
-  TextEditingController description = TextEditingController();
+  TextEditingController _foodname = TextEditingController();
+  TextEditingController _description = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildFoodNameField() {
@@ -39,7 +42,7 @@ class _addpageScreenState extends State<addpageScreen> {
       child: Column(
         children: [
           TextFormField(
-            controller: foodname,
+            controller: _foodname,
             decoration: InputDecoration(
               labelText: 'Food Name',
             ),
@@ -50,7 +53,7 @@ class _addpageScreenState extends State<addpageScreen> {
                 return null;
             },
             onSaved: (String value) {
-              _foodName = value;
+              _foodname = value as TextEditingController;
             },
           )
         ],
@@ -64,7 +67,7 @@ class _addpageScreenState extends State<addpageScreen> {
       child: Column(
         children: [
           TextFormField(
-            controller: description,
+            controller: _description,
             maxLines: 4,
             decoration: InputDecoration(
               labelText: 'Description',
@@ -76,7 +79,7 @@ class _addpageScreenState extends State<addpageScreen> {
                 return null;
             },
             onSaved: (String value) {
-              _description = value;
+              _description = value as TextEditingController;
             },
           )
         ],
@@ -86,6 +89,7 @@ class _addpageScreenState extends State<addpageScreen> {
 
   final List IngredientList = [''];
   TextEditingController IngredientController = TextEditingController();
+
 
   void addIngredientToList() {
     setState(() {
@@ -281,6 +285,7 @@ class _addpageScreenState extends State<addpageScreen> {
     );
   }
 
+
   CollectionReference ref = FirebaseFirestore.instance.collection('AddRecipe');
   @override
   Widget build(BuildContext context) {
@@ -304,12 +309,12 @@ class _addpageScreenState extends State<addpageScreen> {
               ),
               onPressed: () {
                 ref.add({
-                  'foodname': _foodName.toString(),
-                  'description': _description.toString(),
-                  'ingredient': _ingredient.toString(),
-                  'category': _category.toString(),
-                  'level': _level.toString(),
-                  'cookingStep': _cookingStep.toString(),
+                  'foodname': _foodname.text, //field
+                  'description': _description.text, //field
+                  'ingredient': IngredientController.text,
+                  'category': _category.toString(), //dropdown
+                  'level': _level.toString(), //dropdown
+                  'cookingStep': CookingStepController.text,
                   'chooseimage': file.toString(),
                 }).whenComplete(() => Navigator.pop(context));
               },
@@ -320,6 +325,9 @@ class _addpageScreenState extends State<addpageScreen> {
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
+
+
+
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -344,3 +352,4 @@ class _addpageScreenState extends State<addpageScreen> {
         ]);
   }
 }
+

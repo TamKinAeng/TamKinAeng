@@ -4,6 +4,7 @@ import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/addRecipe/component/AddPage.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/body.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'component/body.dart';
 import 'component/AddPage.dart';
@@ -15,15 +16,16 @@ class AddRecipe extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(context),
       //body for the add recipe landing page
-      body: AddRecipeBody(),
-      //button for add the recipe page
+
+      // We are not able to use BottomNavigationBar because the icon parameter dont accept SVG
+      // We also use Provided to manage the state of our Nav
       floatingActionButton: FloatingActionButton(
         onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => addpageScreen())); },
         child: const Icon(Icons.edit),
-        backgroundColor: Color(0xFF5D111B),
+        backgroundColor: Color(0xFF3C096C),
       ),
-      // We are not able to use BottomNavigationBar because the icon parameter dont accept SVG
-      // We also use Provided to manage the state of our Nav
+      body: AddRecipeBody(),
+      //button for add the recipe page
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
