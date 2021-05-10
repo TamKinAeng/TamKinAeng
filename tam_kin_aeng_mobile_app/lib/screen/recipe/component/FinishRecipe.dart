@@ -70,12 +70,12 @@ class _FinishContentState extends State<FinishContent> {
     );
   }
 
-  void _showRatingAppDialog() {
+  void _showRatingAppDialog() async {
     final fb = FirebaseFirestore.instance.collection('Recipe').doc(widget.finishDB.id).collection('RecipeReview');
     String name;
-    FirebaseFirestore.instance.collection("Users").doc(getUID().toString()).get().then((querySnapshot){
-      name = querySnapshot.data()["Firstname"];
-      });
+    FirebaseFirestore.instance.collection("Users").doc(await getUID()).get().then((querySnapshot){
+      name = querySnapshot.data()["Firstname"]; 
+      }); 
     double defaultSize = SizeConfig.defaultSize;
     final _ratingDialog = RatingDialog(
       image: Image.asset("assets/images/logoRevised.png",
