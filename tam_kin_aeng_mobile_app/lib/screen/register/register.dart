@@ -286,7 +286,7 @@ class _registerScreenState extends State<registerScreen> {
                               MaterialPageRoute(
                                   builder: (context) => LoginScreen()),
                             );
-                            userInfo(_firstname, _lastname, _gender, _birthdate);
+                            userInfo(_email, _firstname, _lastname, _gender, _birthdate);
                           } on FirebaseAuthException catch (e) {
                             print(e.message);
                           }

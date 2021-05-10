@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-Future<void> userInfo(String _firstname, String _lastname, String _gender, String _birthdate) async {
+Future<void> userInfo(String _email, String _firstname, String _lastname, String _gender, String _birthdate) async {
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
   FirebaseAuth auth = FirebaseAuth.instance;
   String uid = auth.currentUser.uid.toString();
   users.doc(uid).set({
+    'Email': _email,
     'Uid': uid,
     'Firstname': _firstname,
     'Lastname': _lastname,
@@ -18,10 +19,8 @@ Future<void> userInfo(String _firstname, String _lastname, String _gender, Strin
 Future<String> getUID() async {
   FirebaseAuth auth = FirebaseAuth.instance;
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  String uid = auth.currentUser.uid.toString();
+  users.doc(uid).get();
 
-  users.doc(auth.currentUser.uid).get(
-    
-    
-  );
-  return auth.currentUser.uid;
+  return uid;
 }
