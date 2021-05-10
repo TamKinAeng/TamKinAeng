@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/search.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/ingredientChecklist.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/component/layout.dart';
@@ -47,7 +48,11 @@ class RecipeScreen extends StatelessWidget {
         leading: IconButton(
           icon: SvgPicture.asset("assets/icons/back.svg"),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ));
           },
         ),
         // On Android by default its false

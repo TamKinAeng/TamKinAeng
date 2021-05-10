@@ -57,57 +57,63 @@ class _RecipeBodyState extends State<RecipeBody> {
                     Container(
                         margin: EdgeInsets.all(5),
                         child: Image.network(recipes['imgUrl'])),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                            child: Row(
-                          children: [
-                            if (recipes['dificulty'] == "low")
-                              SvgPicture.asset(
-                                "assets/icons/low_grey.svg",
-                                height: defaultSize * 2,
-                              ),
-                            if (recipes['dificulty'] == "medium")
-                              SvgPicture.asset(
-                                "assets/icons/med_grey.svg",
-                                height: defaultSize * 2,
-                              ),
-                            Text(" "+recipes['dificulty']+" level",
-                                style: GoogleFonts.roboto(
-                                    textStyle: TextStyle(
-                                  fontSize: 16,
-                                ))),
-                          ],
-                        )),
-                        Container(
-                            child: Row(
-                          children: [
-                            Image.asset(
-                              "assets/images/timer.png",
-                              height: defaultSize * 2,
-                            ),
-                            Text(" "+recipes['time'] + " Minutes",
-                                style: GoogleFonts.roboto(
-                                    textStyle: TextStyle(
-                                  fontSize: 16,
-                                ))),
-                          ],
-                        )),
-                        Container(child: Text(""),),
-                      ],
-                    ),
-                    Container(
-                        margin: EdgeInsets.all(10),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                              child: Row(
                             children: [
-                              Text('Description',
+                              if (recipes['dificulty'] == "low")
+                                SvgPicture.asset(
+                                  "assets/icons/low_grey.svg",
+                                  height: defaultSize * 2,
+                                ),
+                              if (recipes['dificulty'] == "medium")
+                                SvgPicture.asset(
+                                  "assets/icons/med_grey.svg",
+                                  height: defaultSize * 2,
+                                ),
+                              Text(" "+recipes['dificulty']+" level",
                                   style: GoogleFonts.roboto(
                                       textStyle: TextStyle(
-                                    fontSize: 18,
-                                  )))
-                            ])),
+                                    fontSize: 16,
+                                  ))),
+                            ],
+                          )),
+                          Container(
+                              child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/timer.png",
+                                height: defaultSize * 2,
+                              ),
+                              Text(" "+recipes['time'] + " Minutes",
+                                  style: GoogleFonts.roboto(
+                                      textStyle: TextStyle(
+                                    fontSize: 16,
+                                  ))),
+                            ],
+                          )),
+                          Container(child: Text(""),),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text('Description',
+                                    style: GoogleFonts.roboto(
+                                        textStyle: TextStyle(
+                                      fontSize: 18,
+                                    )))
+                              ])),
+                    ),
                     // Description content
                     Container(
                         margin: EdgeInsets.all(10),

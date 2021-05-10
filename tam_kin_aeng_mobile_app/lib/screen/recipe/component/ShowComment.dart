@@ -73,7 +73,7 @@ class _CommentListState extends State<CommentList> {
                                 ))),
                           ],
                         ),
-                        Container(child:Text('______________________________'))
+                        Container(child:Text('_______________________________________________'))
                       ]));
                 }).toList(),
               );

@@ -22,11 +22,14 @@ class _FinishContentState extends State<FinishContent> {
           child: Column(
         children: [
           Center(
-              child: Container(
-                  child: Image.asset(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
+                child: Container(
+                    child: Image.asset(
             "assets/images/champion.png",
-            height: defaultSize * 30,
-          ))),
+            height: defaultSize * 20,
+          )),
+              )),
           Center(
               child: Container(
             width: MediaQuery.of(context).size.width / 1.2,

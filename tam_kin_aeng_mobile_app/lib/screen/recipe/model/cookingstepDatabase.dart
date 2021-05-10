@@ -19,7 +19,6 @@ class ListCooking extends StatefulWidget {
 }
 
 class _ListCookingState extends State<ListCooking> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,9 +48,7 @@ class _ListCookingState extends State<ListCooking> {
                       Card(
                         color: Color.fromRGBO(255, 109, 0, 1),
                         child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minWidth: 200
-                          ),
+                          constraints: BoxConstraints(minWidth: 200),
                           child: Text(
                             'Step: ' + (widget.Index + 1).toString(),
                             style: GoogleFonts.roboto(
@@ -69,12 +66,14 @@ class _ListCookingState extends State<ListCooking> {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width / 1.2,
+                  width: MediaQuery.of(context).size.width / 1.4,
                   child: Text(
                     lists[widget.Index]["value"],
                     style: GoogleFonts.roboto(
                         textStyle: TextStyle(
-                      fontSize: 28,
+                      letterSpacing: -1.0,
+                      wordSpacing: 2.0,
+                      fontSize: 20,
                     )),
                     textAlign: TextAlign.center,
                   ),
@@ -129,7 +128,7 @@ class _ListCookingState extends State<ListCooking> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         FloatingActionButton.extended(
-                          backgroundColor: Color.fromRGBO(60, 9, 108, 1),
+                            backgroundColor: Color.fromRGBO(60, 9, 108, 1),
                             label: Text("Next"),
                             onPressed: () {
                               if (widget.Index < lists.length - 1) {
@@ -145,7 +144,9 @@ class _ListCookingState extends State<ListCooking> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => FinishScreen(finishDB: widget.StepDB,),
+                                      builder: (context) => FinishScreen(
+                                        finishDB: widget.StepDB,
+                                      ),
                                     ));
                               }
                             }),
@@ -163,4 +164,3 @@ class _ListCookingState extends State<ListCooking> {
     );
   }
 }
-
