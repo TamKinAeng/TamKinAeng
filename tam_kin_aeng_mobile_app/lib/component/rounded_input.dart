@@ -30,9 +30,8 @@ class _RoundedInputState extends State<RoundedInput> {
             || RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+").hasMatch(value)){
               setState(() {
                 widget.isError = true;
-                widget.hint = "Please enter a valid email";
+                widget.hint = "Enter a valid email";
               });
-              return "";
             }
             return null;
           },

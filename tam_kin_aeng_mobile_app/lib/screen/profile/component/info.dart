@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-class Info extends StatelessWidget {
+class Info extends StatefulWidget {
   const Info({
     Key key,
     this.name,
@@ -11,6 +11,11 @@ class Info extends StatelessWidget {
   }) : super(key: key);
   final String name, email, image;
 
+  @override
+  _InfoState createState() => _InfoState();
+}
+
+class _InfoState extends State<Info> {
   @override
   Widget build(BuildContext context) {
     double defaultSize = SizeConfig.defaultSize;
@@ -42,12 +47,12 @@ class Info extends StatelessWidget {
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       alignment: Alignment.topLeft,
-                      image: AssetImage(image),
+                      image: AssetImage(widget.image),
                     ),
                   ),
                 ),
                 Text(
-                  name,
+                  widget.name,
                   style: TextStyle(
                     fontSize: defaultSize * 2.2, //22
                     color: kPrimaryColor,
@@ -57,7 +62,7 @@ class Info extends StatelessWidget {
                   height: defaultSize / 2,
                 ), //5
                 Text(
-                  email,
+                  widget.email,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: kPrimaryColor,

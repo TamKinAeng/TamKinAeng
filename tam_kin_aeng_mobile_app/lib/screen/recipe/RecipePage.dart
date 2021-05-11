@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/search.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/home/home_screen.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/ingredientChecklist.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/register/firebase.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
@@ -261,7 +262,11 @@ await Firebase.initializeApp().then((value) async {
         leading: IconButton(
           icon: SvgPicture.asset("assets/icons/back.svg"),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ));
           },
         ),
         // On Android by default its false
