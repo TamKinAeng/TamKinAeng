@@ -27,10 +27,10 @@ class FavRecipeCard extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(8, 3, 0, 0),
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Container(
-              height: defaultSize * 100,
-              width: defaultSize * 17,
+              height: defaultSize * 17,
+              width: defaultSize * 100,
               child: Card(
                 color: color,
                 shape: RoundedRectangleBorder(
@@ -46,66 +46,103 @@ class FavRecipeCard extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Recipe Difficulty
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
-                                child: SvgPicture.asset(
-                                  repCard['dificulty'] == 'low'
-                                      ? "assets/icons/low_level.svg"
-                                      : repCard['dificulty'] == 'mid'
-                                          ? "assets/icons/med_level.svg"
-                                          : "assets/icons/high_level.svg",
-                                  height: defaultSize * 2.5,
-                                  width: defaultSize * 2.5,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
-                                child: Text(
-                                  repCard['dificulty'],
-                                  style: TextStyle(
-                                    fontSize: defaultSize * 1.8, //20
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              Spacer(),
-
-                              // Recipe Time
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(8, 0, 0, 3),
-                                child: SvgPicture.asset(
-                                  "assets/icons/clock.svg",
-                                  height: defaultSize * 2.5,
-                                  width: defaultSize * 2.5,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
-                                child: Text(
-                                  "${repCard['time'].toString()} M",
-                                  style: TextStyle(
-                                    fontSize: defaultSize * 1.8, //20
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              Spacer(),
-
                               //Recipe Name
                               Padding(
-                                padding: EdgeInsets.fromLTRB(5, 0, 0, 8),
+                                padding: EdgeInsets.fromLTRB(15, 10, 0, 3),
                                 child: Text(
                                   repCard['name'],
                                   style: TextStyle(
-                                    fontSize: defaultSize * 1.8,
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Spacer(),
+                              //Recipe Chef
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(15, 0, 0, 3),
+                                child: Text(
+                                  repCard['chef'],
+                                  style: TextStyle(
+                                    fontSize: 15,
                                     color: Colors.white,
                                   ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
+                              Spacer(),
+                              // Recipe Difficulty
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 10, bottom: 10),
+                                        child: SvgPicture.asset(
+                                          repCard['dificulty'] == 'low'
+                                              ? "assets/icons/low_level.svg"
+                                              : repCard['dificulty'] == 'mid'
+                                                  ? "assets/icons/med_level.svg"
+                                                  : "assets/icons/high_level.svg",
+                                          height: defaultSize * 2,
+                                          width: defaultSize * 2,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding:
+                                          EdgeInsets.only(left: 35, top: 3),
+                                      child: Container(
+                                        child: Text(
+                                          repCard['dificulty'],
+                                          style: TextStyle(
+                                            fontSize: 13, //20
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Spacer(),
+                              // Recipe Time
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(15, 0, 0, 3),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      child: SvgPicture.asset(
+                                        "assets/icons/clock.svg",
+                                        height: defaultSize * 1.8,
+                                        width: defaultSize * 1.8,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(3, 0, 0, 0),
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 20, top: 1, bottom: 10),
+                                        child: Text(
+                                          "${repCard['time'].toString()} M",
+                                          style: TextStyle(
+                                            fontSize: 13, //20
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Spacer(),
                             ],
                           ),
                         ),
@@ -118,8 +155,8 @@ class FavRecipeCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 62,
-            top: 0,
+            right: 40,
+            top: 17,
             child: Container(
               child: CircleAvatar(
                 backgroundImage: NetworkImage(repCard['imgUrl']),
@@ -129,7 +166,7 @@ class FavRecipeCard extends StatelessWidget {
               decoration: new BoxDecoration(
                   shape: BoxShape.circle,
                   border: new Border.all(
-                    color: Color(0xFF9575CD),
+                    color: Color(0xFFFFFFFF),
                     width: 5.0,
                   )),
             ),

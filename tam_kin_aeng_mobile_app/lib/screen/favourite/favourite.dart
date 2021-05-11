@@ -53,12 +53,12 @@ class _favouritePageState extends State<favouritePage> {
           return Scaffold(
             appBar: AppBar(
                 // This is icons and logo on our app bar
-                leading: IconButton(
-                  icon: SvgPicture.asset("assets/icons/back.svg"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                // leading: IconButton(
+                //   icon: SvgPicture.asset("assets/icons/back.svg"),
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //   },
+                // ),
                 // On Android by default its false
                 centerTitle: true,
                 title: Image.asset(
@@ -93,12 +93,12 @@ class _favouritePageState extends State<favouritePage> {
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
                 // This is icons and logo on our app bar
-                leading: IconButton(
-                  icon: SvgPicture.asset("assets/icons/back.svg"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                // leading: IconButton(
+                //   icon: SvgPicture.asset("assets/icons/back.svg"),
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //   },
+                // ),
                 // On Android by default its false
                 centerTitle: true,
                 title: Image.asset(
@@ -107,7 +107,6 @@ class _favouritePageState extends State<favouritePage> {
                 ),
                 actions: <Widget>[
                   // Search Button
-
                   SizedBox(
                     // It means 5 because by out defaultSize = 10
                     width: SizeConfig.defaultSize * 0.5,
@@ -120,30 +119,41 @@ class _favouritePageState extends State<favouritePage> {
                 height: MediaQuery.of(context).size.height,
                 child: Column(
                   children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 160),
+                      child: Text(
+                        "Favorite Page",
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.roboto(
+                            textStyle: TextStyle(
+                          fontSize: 30,
+                          color: Color(0xFF2B2B2B),
+                          fontWeight: FontWeight.bold,
+                        )),
+                      ),
+                    ),
                     Flexible(
-                      flex: 5,
                       child: Container(
                         height: MediaQuery.of(context).size.height *
                             (defaultSize * 0.083),
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(
-                              defaultSize * 1.5, 0, 1, 0), // นอน 16 ตั้ง 20
-                          child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              // mainAxisSpacing: 5,
-                              // crossAxisSpacing: 5,
-                            ),
+                              defaultSize * 0.5, 0, 5, 0), 
+                          child: ListView.builder(
                             itemCount: repList.length,
-                            itemBuilder: (context, index) => FavRecipeCard(
-                              recipeDetail: repList.toList()[index],
-                              color: (index%2==0)?Colors.lightGreen:Colors.lightBlueAccent,
+                            itemBuilder: (context, index) => Container(
+                              padding: EdgeInsets.only(top: 10),
+                              child: FavRecipeCard(
+                                recipeDetail: repList.toList()[index],
+                                color: (index % 2 == 0)
+                                    ? Color(0xFFD92E40)
+                                    : Color(0xFF7D9C15),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
