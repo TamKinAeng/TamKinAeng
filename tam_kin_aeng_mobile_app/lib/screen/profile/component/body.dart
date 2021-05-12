@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/addRecipe/addRecipe.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/favourite/favourite.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/learn%20how%20to%20use/equipPage.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/profile/component/profile_menu_item.dart';
 import '../../../size_config.dart';
 import 'info.dart';
@@ -36,28 +39,38 @@ class _BodyState extends State<Body> {
                 height: SizeConfig.defaultSize * 2, //20
               ),
               ProfileMenuItem(
-                iconSrc: "assets/icons/bookmark_fill.svg",
-                title: "Saved Recipes",
-                press: () {},
+                iconSrc: "assets/icons/heart_pro.svg",
+                title: "Favourite",
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => favouritePage())
+                    );
+                },
               ),
               ProfileMenuItem(
-                iconSrc: "assets/icons/chef_color.svg",
-                title: "Super Plan",
-                press: () {},
+                iconSrc: "assets/icons/add_pro.svg",
+                title: "Add Recipes",
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddRecipe())
+                    );
+                },
               ),
               ProfileMenuItem(
-                iconSrc: "assets/icons/language.svg",
-                title: "Change language",
-                press: () {},
+                iconSrc: "assets/icons/pot_pro.svg",
+                title: "Learn How to Use",
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => equipPage())
+                    );
+                },
               ),
               ProfileMenuItem(
-                iconSrc: "assets/icons/info.svg",
-                title: "Help",
-                press: () {},
-              ),
-              ProfileMenuItem(
-                iconSrc: "assets/icons/logout-1.svg",
-                title: "Login Out",
+                iconSrc: "assets/icons/logout_pro.svg",
+                title: "Logout",
                 press: () async {
                   await FirebaseAuth.instance.signOut();
                   Navigator.push(
