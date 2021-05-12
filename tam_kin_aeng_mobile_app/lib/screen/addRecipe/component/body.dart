@@ -68,7 +68,7 @@ class _AddRecipeBodyState extends State<AddRecipeBody> {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
-                                Text(snapshot.data.docs[index].data()['foodname'],
+                                Text(snapshot.data.docs[index].data()['name'],
                                     style: TextStyle(fontSize: 25)),
                                 Text(snapshot.data.docs[index]
                                     .data()['description'],

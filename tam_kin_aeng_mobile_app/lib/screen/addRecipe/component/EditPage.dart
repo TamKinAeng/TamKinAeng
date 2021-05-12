@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _EditPageState extends State<EditPage> {
   String _category;
   String _level;
   String _cookingStep;
-  String _chooseImage;
+  String _Time;
 
   TextEditingController _foodname = TextEditingController();
   TextEditingController _description = TextEditingController();
@@ -138,7 +139,7 @@ class _EditPageState extends State<EditPage> {
             ListTile(
               contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               title:
-              Text(IngredientList.toString(), style: TextStyle(fontSize: 20)),
+              Text(IngredientList.toString().replaceAll('{', '').replaceAll('}', '').replaceAll('[', '').replaceAll(']', ''), style: TextStyle(fontSize: 20)),
             ),
           ],
         ));
@@ -218,9 +219,12 @@ class _EditPageState extends State<EditPage> {
 
   List CookingStepList = [];
   TextEditingController CookingStepController = TextEditingController();
+  TextEditingController TimeController = TextEditingController();
   void addCookingStepToList() {
     setState(() {
-      CookingStepList.insert(0, CookingStepController.text);
+      CookingStepList.add({
+        'value':CookingStepController.text,
+        'time':TimeController.text,});
     });
   }
 
@@ -230,21 +234,42 @@ class _EditPageState extends State<EditPage> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(10),
-              child: TextFormField(
-                  controller: CookingStepController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Cooking Step',
-                  ),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return 'Please tell me the cooking step';
-                    } else
-                      return null;
-                  },
-                  onSaved: (String value) {
-                    _cookingStep = value;
-                  }),
+              child: Column(
+            children: [
+            TextFormField(
+            controller: CookingStepController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Cooking Step',
+                ),
+                validator: (String value) {
+                  if (value.isEmpty) {
+                    return 'Please tell me the cooking step';
+                  } else
+                    return null;
+                },
+                onSaved: (String value) {
+                  _cookingStep = value;
+                }),
+            TextFormField(
+                controller: TimeController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Time',
+                ),
+                validator: (String value) {
+                  if (value.isEmpty) {
+                    return 'Please tell me the Time';
+                  } else
+                    return null;
+                },
+                onSaved: (String value) {
+                  _Time = value;
+                }),
+          ],
+        ),
+
+
             ),
             RaisedButton(
               child: Text('Add'),
@@ -255,7 +280,7 @@ class _EditPageState extends State<EditPage> {
             ListTile(
               contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               title:
-              Text(CookingStepList.toString(), style: TextStyle(fontSize: 20)),
+              Text(CookingStepList.toString().replaceAll('{', '').replaceAll('}', '').replaceAll('[', '').replaceAll(']', ''), style: TextStyle(fontSize: 20)),
             ),
           ],
         ));
@@ -269,6 +294,20 @@ class _EditPageState extends State<EditPage> {
   File tmpFile;
   String errMessage = 'Error Uploading Image';
 
+  File _image;
+  String _uploadedFileURL;
+  final picker = ImagePicker();
+  Future _pickImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+    print(_image);
+  }
   chooseImage() {
     setState(() {
       file = ImagePicker.platform.pickImage(source: ImageSource.gallery)
@@ -276,6 +315,22 @@ class _EditPageState extends State<EditPage> {
     });
   }
 
+  Future uploadImageToFirebase(BuildContext context) async {
+    String fileName = file.toString();
+    String url;
+    Reference firebaseStorageRef =
+    FirebaseStorage.instance.ref().child('uploads/$fileName');
+    UploadTask uploadTask = firebaseStorageRef.putFile(await file);
+    await uploadTask.whenComplete(() async => {
+    url = await uploadTask.snapshot.ref.getDownloadURL()});
+
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    uid = auth.currentUser.uid.toString();
+    users.doc(uid).collection('AddRecipe').add({'imgURL': url});
+    return url;
+  }
   Widget _buildChooseImageField() {
     return Container(
       padding: EdgeInsets.all(30.0),
@@ -283,7 +338,7 @@ class _EditPageState extends State<EditPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           OutlineButton(
-            onPressed: chooseImage,
+            onPressed: _pickImage,
             child: Text('Choose Image'),
           ),
           SizedBox(
@@ -326,15 +381,31 @@ class _EditPageState extends State<EditPage> {
                     'Save',
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    uid = await getUID();
+                    String url;
+                    if(_image != null) {
+                      String fileName = uid + DateTime
+                          .now()
+                          .microsecond
+                          .toString();
+                      Reference firebaseStorageRef =
+                      FirebaseStorage.instance.ref().child('uploads/$fileName');
+                      UploadTask uploadTask = firebaseStorageRef.putFile(_image);
+                      await uploadTask.whenComplete(() async =>
+                      {
+                        print(uploadTask.snapshot.ref),
+                        url = await uploadTask.snapshot.ref.getDownloadURL(),
+                      });
+                    };
                     widget.docToEdit.reference.update({
-                      'foodname': _foodname.text, //field
+                      'name': _foodname.text, //field
                       'description': _description.text, //field
                       'ingredient': IngredientList,
-                      'category': _category.toString(), //dropdown
-                      'level': _level.toString(), //dropdown
+                      'cuisine': _category.toString(), //dropdown
+                      'difficulty': _level.toString(), //dropdown
                       'cookingStep': CookingStepList,
-                      'chooseimage': file.toString(),
+                      'imgUrl': url,
                     }).whenComplete(() => Navigator.pop(context));
                   },
                 ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _addpageScreenState extends State<addpageScreen> {
   String _category;
   String _level;
   String _cookingStep;
-  String _chooseImage;
+  String _Time;
 
   TextEditingController _foodname = TextEditingController();
   TextEditingController _description = TextEditingController();
@@ -130,7 +131,7 @@ class _addpageScreenState extends State<addpageScreen> {
         ListTile(
           contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           title:
-              Text(IngredientList.toString(), style: TextStyle(fontSize: 20)),
+              Text(IngredientList.toString().replaceAll('{', '').replaceAll('}', '').replaceAll('[', '').replaceAll(']', ''), style: TextStyle(fontSize: 20)),
         ),
       ],
     ));
@@ -210,9 +211,14 @@ class _addpageScreenState extends State<addpageScreen> {
 
   final List CookingStepList = [];
   TextEditingController CookingStepController = TextEditingController();
+  TextEditingController TimeController = TextEditingController();
+
   void addCookingStepToList() {
     setState(() {
-      CookingStepList.add(CookingStepController.text);
+      CookingStepList.add({
+        'value':CookingStepController.text,
+        'time':TimeController.text,
+      });
     });
     print(CookingStepList);
   }
@@ -223,21 +229,41 @@ class _addpageScreenState extends State<addpageScreen> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.all(10),
-          child: TextFormField(
-              controller: CookingStepController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Cooking Step',
-              ),
-              validator: (String value) {
-                if (value.isEmpty) {
-                  return 'Please tell me the cooking step';
-                } else
-                  return null;
-              },
-              onSaved: (String value) {
-                _cookingStep = value;
-              }),
+          child: Column(
+            children: [
+              TextFormField(
+                  controller: CookingStepController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Cooking Step',
+                  ),
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Please tell me the cooking step';
+                    } else
+                      return null;
+                  },
+                  onSaved: (String value) {
+                    _cookingStep = value;
+                  }),
+              TextFormField(
+                  controller: TimeController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Time',
+                  ),
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Please tell me the Time';
+                    } else
+                      return null;
+                  },
+                  onSaved: (String value) {
+                    _Time = value;
+                  }),
+            ],
+          ),
+
         ),
         RaisedButton(
           child: Text('Add'),
@@ -248,7 +274,7 @@ class _addpageScreenState extends State<addpageScreen> {
         ListTile(
           contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           title:
-              Text(CookingStepList.toString(), style: TextStyle(fontSize: 20)),
+              Text(CookingStepList.toString().replaceAll('{', '').replaceAll('}', '').replaceAll('[', '').replaceAll(']', ''), style: TextStyle(fontSize: 20)),
         ),
       ],
     ));
@@ -268,11 +294,13 @@ class _addpageScreenState extends State<addpageScreen> {
   Future _pickImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
+
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
       });
     }
+    print(_image);
   }
 
   chooseImage() {
@@ -280,6 +308,23 @@ class _addpageScreenState extends State<addpageScreen> {
       file = ImagePicker.platform.pickImage(source: ImageSource.gallery)
           as Future<File>;
     });
+  }
+
+  Future uploadImageToFirebase(BuildContext context) async {
+    String fileName = file.toString();
+    String url;
+    Reference firebaseStorageRef =
+    FirebaseStorage.instance.ref().child('uploads/$fileName');
+    UploadTask uploadTask = firebaseStorageRef.putFile(await file);
+    await uploadTask.whenComplete(() async => {
+      url = await uploadTask.snapshot.ref.getDownloadURL()});
+
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    uid = auth.currentUser.uid.toString();
+    users.doc(uid).collection('AddRecipe').add({'imgURL': url});
+    return url;
   }
 
   Widget _buildChooseImageField() {
@@ -290,7 +335,7 @@ class _addpageScreenState extends State<addpageScreen> {
         children: <Widget>[
           OutlineButton(
             onPressed: () async {
-              chooseImage();
+              _pickImage();
             },
               child: Text('Choose Image'),
               ),
@@ -302,6 +347,7 @@ class _addpageScreenState extends State<addpageScreen> {
     );
   }
 
+  static String uid;
   Future<String> getUID() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
@@ -338,19 +384,34 @@ class _addpageScreenState extends State<addpageScreen> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () async {
-                String uid = await getUID();
+                uid = await getUID();
                 CollectionReference ref = FirebaseFirestore.instance
                     .collection('Users')
                     .doc(uid)
                     .collection('AddRecipe');
+                String url;
+                if(_image != null) {
+                  String fileName = uid + DateTime
+                      .now()
+                      .microsecond
+                      .toString();
+                  Reference firebaseStorageRef =
+                  FirebaseStorage.instance.ref().child('uploads/$fileName');
+                  UploadTask uploadTask = firebaseStorageRef.putFile(_image);
+                  await uploadTask.whenComplete(() async =>
+                  {
+                    print(uploadTask.snapshot.ref),
+                    url = await uploadTask.snapshot.ref.getDownloadURL(),
+                  });
+                };
                 ref.add({
-                  'foodname': _foodname.text, //field
+                  'name': _foodname.text, //field
                   'description': _description.text, //field
                   'ingredient': IngredientList,
-                  'category': _category.toString(), //dropdown
-                  'level': _level.toString(), //dropdown
+                  'cuisine': _category.toString(), //dropdown
+                  'difficulty': _level.toString(), //dropdown
                   'cookingStep': CookingStepList,
-                  'chooseimage': file.toString(),
+                  'imgUrl': url,
                 }).whenComplete(() => Navigator.pop(context));
               },
             ),
