@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ class EditPage extends StatefulWidget {
 
   DocumentSnapshot docToEdit;
   EditPage({this.docToEdit});
-
 
 
   @override
@@ -38,6 +38,8 @@ class _EditPageState extends State<EditPage> {
   void initState() {
     _foodname = TextEditingController(text: widget.docToEdit.data()['foodname']);
     _description = TextEditingController(text: widget.docToEdit.data()['description']);
+    IngredientList = List.from(widget.docToEdit.data()['ingredient']);
+    CookingStepList = List.from(widget.docToEdit.data()['cookingStep']);
 
     super.initState();
   }
@@ -95,17 +97,12 @@ class _EditPageState extends State<EditPage> {
   }
 
 
-  List IngredientList = [''];
+  List IngredientList = [];
   TextEditingController IngredientController = TextEditingController();
 
   void addIngredientToList() {
-    final fb = FirebaseFirestore.instance.collection('Recipe').doc(widget.docToEdit.id).collection('RecipeReview');
-    double defaultSize = SizeConfig.defaultSize;
     setState(() {
       IngredientList.insert(0, IngredientController.text);
-      fb.add({
-        'ingredient': IngredientController.text,
-      });
     });
   }
 
@@ -219,7 +216,7 @@ class _EditPageState extends State<EditPage> {
         ));
   }
 
-  final List CookingStepList = [''];
+  List CookingStepList = [];
   TextEditingController CookingStepController = TextEditingController();
   void addCookingStepToList() {
     setState(() {
@@ -297,6 +294,15 @@ class _EditPageState extends State<EditPage> {
     );
   }
 
+  static String uid;
+  Future<String> getUID() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    uid = auth.currentUser.uid.toString();
+    users.doc(uid).get();
+
+    return uid;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -324,10 +330,10 @@ class _EditPageState extends State<EditPage> {
                     widget.docToEdit.reference.update({
                       'foodname': _foodname.text, //field
                       'description': _description.text, //field
-                      'ingredient': _ingredient.toString(),
+                      'ingredient': IngredientList,
                       'category': _category.toString(), //dropdown
                       'level': _level.toString(), //dropdown
-                      'cookingStep': _cookingStep.toString(),
+                      'cookingStep': CookingStepList,
                       'chooseimage': file.toString(),
                     }).whenComplete(() => Navigator.pop(context));
                   },

@@ -1,17 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/body.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/register/firebase.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 import 'package:tam_kin_aeng_mobile_app/screen/addRecipe/addRecipe.dart';
-
+import 'package:tam_kin_aeng_mobile_app/screen/register/firebase.dart';
 
 class addpageScreen extends StatefulWidget {
   final DocumentSnapshot addrcpDB;
@@ -87,13 +89,12 @@ class _addpageScreenState extends State<addpageScreen> {
     );
   }
 
-  final List IngredientList = [''];
+  final List IngredientList = [];
   TextEditingController IngredientController = TextEditingController();
-
 
   void addIngredientToList() {
     setState(() {
-      IngredientList.insert(0, IngredientController.text);
+      IngredientList.add(IngredientController.text);
     });
   }
 
@@ -207,12 +208,13 @@ class _addpageScreenState extends State<addpageScreen> {
     ));
   }
 
-  final List CookingStepList = [''];
+  final List CookingStepList = [];
   TextEditingController CookingStepController = TextEditingController();
   void addCookingStepToList() {
     setState(() {
-      CookingStepList.insert(0, CookingStepController.text);
+      CookingStepList.add(CookingStepController.text);
     });
+    print(CookingStepList);
   }
 
   Widget _buildCookingStep() {
@@ -260,6 +262,19 @@ class _addpageScreenState extends State<addpageScreen> {
   File tmpFile;
   String errMessage = 'Error Uploading Image';
 
+  File _image;
+  String _uploadedFileURL;
+  final picker = ImagePicker();
+  Future _pickImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
   chooseImage() {
     setState(() {
       file = ImagePicker.platform.pickImage(source: ImageSource.gallery)
@@ -274,9 +289,11 @@ class _addpageScreenState extends State<addpageScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           OutlineButton(
-            onPressed: chooseImage,
-            child: Text('Choose Image'),
-          ),
+            onPressed: () async {
+              chooseImage();
+            },
+              child: Text('Choose Image'),
+              ),
           SizedBox(
             height: 20.0,
           )
@@ -285,8 +302,21 @@ class _addpageScreenState extends State<addpageScreen> {
     );
   }
 
+  Future<String> getUID() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    String uid = auth.currentUser.uid.toString();
+    users.doc(uid).get();
 
-  CollectionReference ref = FirebaseFirestore.instance.collection('AddRecipe');
+    return uid;
+  }
+
+  @override
+  void initState() {
+    getUID();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -307,14 +337,19 @@ class _addpageScreenState extends State<addpageScreen> {
                 'Save',
                 style: TextStyle(color: Colors.white),
               ),
-              onPressed: () {
+              onPressed: () async {
+                String uid = await getUID();
+                CollectionReference ref = FirebaseFirestore.instance
+                    .collection('Users')
+                    .doc(uid)
+                    .collection('AddRecipe');
                 ref.add({
                   'foodname': _foodname.text, //field
                   'description': _description.text, //field
-                  'ingredient': IngredientController.text,
+                  'ingredient': IngredientList,
                   'category': _category.toString(), //dropdown
                   'level': _level.toString(), //dropdown
-                  'cookingStep': CookingStepController.text,
+                  'cookingStep': CookingStepList,
                   'chooseimage': file.toString(),
                 }).whenComplete(() => Navigator.pop(context));
               },
@@ -325,9 +360,6 @@ class _addpageScreenState extends State<addpageScreen> {
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
-
-
-
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -342,8 +374,10 @@ class _addpageScreenState extends State<addpageScreen> {
         ),
         // On Android by default its false
         centerTitle: true,
-        title: Image.asset("assets/images/logoRevised.png",
-        height: 37,),
+        title: Image.asset(
+          "assets/images/logoRevised.png",
+          height: 37,
+        ),
         actions: <Widget>[
           SizedBox(
             // It means 5 because by out defaultSize = 10
@@ -353,3 +387,7 @@ class _addpageScreenState extends State<addpageScreen> {
   }
 }
 
+Future<void> userInfo(String _docId) async {
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  return;
+}
