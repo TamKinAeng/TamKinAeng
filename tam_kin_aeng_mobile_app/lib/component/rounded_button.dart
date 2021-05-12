@@ -18,8 +18,8 @@ class RoundedButton extends StatelessWidget {
 
   final String title;
   final Widget pagelink;
-  final String email;
-  final String password;
+  final TextEditingController email;
+  final TextEditingController password;
   final GlobalKey<FormState> formkey;
   
   @override
@@ -29,15 +29,11 @@ class RoundedButton extends StatelessWidget {
     return RaisedButton(
       onPressed: () async {
         print(formkey.currentState.validate());
-        print("hello");
         if (formkey.currentState.validate()){
           try { FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-          print("hello");
-          print(email);
-          print(password);
             await _firebaseAuth.signInWithEmailAndPassword(
-              email: email, 
-              password: password
+              email: email.text, 
+              password: password.text
               );
                Navigator.push(context, MaterialPageRoute(builder: (context) => this.pagelink));
           } on FirebaseAuthException catch (e){

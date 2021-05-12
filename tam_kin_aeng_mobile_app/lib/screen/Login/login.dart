@@ -28,11 +28,14 @@ class _LoginScreenState extends State<LoginScreen> {
     double viewInset = MediaQuery.of(context).viewInsets.bottom;
     double defaultLoginSize = size.height - (size.height * 0.2);
     double defaultRegisterSize = size.height - (size.height * 0.1);
+    MediaQueryData queryData = MediaQuery.of(context);
     return Scaffold(
-        body: Stack(children: <Widget>[
+        body: SingleChildScrollView(
+          child: 
+          Stack(children: <Widget>[
           Container(
-            width: double.infinity,
-            height: double.infinity,
+            width: queryData.size.width,
+            height: queryData.size.height,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/Login_Edited.png"),
@@ -43,16 +46,17 @@ class _LoginScreenState extends State<LoginScreen> {
         //Login Form
         Align(
         alignment: Alignment.center,
-        child: SingleChildScrollView(
+        // child: SingleChildScrollView(
             child: Form(
           key: _formKey,
           child: Container(
             width: size.width,
-            height: size.height*1.1,
+            height: size.height,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: 90),
                   Text(
                     'Welcome to TamKinAeng',
                     style: GoogleFonts.righteous(
@@ -89,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           }));
                         },
                         child: Text(
-                          "Forgot passward?         ",
+                          "Forgot password?    ",
                           style: GoogleFonts.roboto(
                               textStyle: TextStyle(
                             fontSize: 17.5,
@@ -103,8 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 10),
                   RoundedButton(
                     title: 'Login',
-                    email: _email.text,
-                    password: _password.text,
+                    email: _email,
+                    password: _password,
                     pagelink: HomeScreen(),
                     formkey: _formKey,
                   ),
@@ -143,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ]),
           ),
         )),
-      )
-    ]));
+      // ),
+    ]),));
   }
 }
