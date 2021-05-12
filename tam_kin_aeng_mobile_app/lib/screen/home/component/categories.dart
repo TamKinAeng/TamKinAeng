@@ -98,14 +98,16 @@ class CategoriesData extends StatelessWidget {
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        Text(
-                                          snapshot.data.docs[index]
-                                              ['description'],
-                                          style: TextStyle(
-                                            color: Colors.grey,
+                                        Flexible(
+                                          child: Text(
+                                            snapshot.data.docs[index]
+                                                ['description'],
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ],
                                     ),

@@ -39,13 +39,15 @@ class _RecipeBodyState extends State<RecipeBody> {
                 child: Column(
                   children: [
                     // Food name
-                    Container(
-                        margin: EdgeInsets.all(10),
-                        child: Text(recipes['name'],
-                            style: GoogleFonts.roboto(
-                                textStyle: TextStyle(
-                              fontSize: 32,
-                            )))),
+                    Center(
+                      child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Text(recipes['name'],
+                              style: GoogleFonts.roboto(
+                                  textStyle: TextStyle(
+                                fontSize: 32,
+                              )))),
+                    ),
                     // Chef
                     Container(
                         margin: EdgeInsets.all(10),

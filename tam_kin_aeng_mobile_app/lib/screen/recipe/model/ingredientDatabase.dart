@@ -34,11 +34,13 @@ class _ListIngredientState extends State<ListIngredient> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(document["value"],
-                                  style: GoogleFonts.roboto(
-                                      textStyle: TextStyle(
-                                    fontSize: 14,
-                                  )))
+                              Flexible(
+                                                              child: Text(document["value"],
+                                    style: GoogleFonts.roboto(
+                                        textStyle: TextStyle(
+                                      fontSize: 14,
+                                    ))),
+                              )
                             ]),
                       ]));
                 }).toList(),
