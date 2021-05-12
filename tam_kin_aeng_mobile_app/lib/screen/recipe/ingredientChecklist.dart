@@ -17,33 +17,42 @@ class IngredientChecklist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-        appBar: buildAppBar(context),
-        body: CheckboxList(
-          IngredientDB: RecipeDB,
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-                backgroundColor: Color.fromRGBO(60, 9, 108, 1),
-                label: Text("Next"),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CookingScreen(
-                          index: 0,
-                          RecipeDB: RecipeDB,
-                        ),
-                      ));
-                }),
-        bottomNavigationBar: MyBottomNavBar());
+    return Container(
+       margin: EdgeInsets.only(top:10),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/test.jpg"),
+              fit: BoxFit.fill)),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+          appBar: buildAppBar(context),
+          body: CheckboxList(
+            IngredientDB: RecipeDB,
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+                  backgroundColor: Color.fromRGBO(60, 9, 108, 1),
+                  label: Text("Next"),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CookingScreen(
+                            index: 0,
+                            RecipeDB: RecipeDB,
+                          ),
+                        ));
+                  }),
+          bottomNavigationBar: MyBottomNavBar()),
+    );
   }
 
   AppBar buildAppBar(BuildContext context) {
     double defaultSize = SizeConfig.defaultSize;
     return AppBar(
+      backgroundColor: Colors.transparent,
         // This is icons and logo on our app bar
         leading: IconButton(
-          icon: SvgPicture.asset("assets/icons/back.svg"),
+          icon: SvgPicture.asset("assets/icons/back.svg",color: Colors.white,),
           onPressed: () {
               Navigator.push(
                   context,
@@ -53,12 +62,6 @@ class IngredientChecklist extends StatelessWidget {
                     ),
                   ));
           },
-        ),
-        // On Android by default its false
-        centerTitle: true,
-        title: Image.asset(
-          "assets/images/logoRevised.png",
-          height: defaultSize * 4,
         ),
         );
   }

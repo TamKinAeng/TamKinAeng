@@ -19,17 +19,17 @@ class _FinishContentState extends State<FinishContent> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return SingleChildScrollView(
-          child: Column(
+      child: Column(
         children: [
           Center(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
-                child: Container(
-                    child: Image.asset(
-            "assets/images/champion.png",
-            height: defaultSize * 20,
+            padding: EdgeInsets.fromLTRB(0, 100, 0, 0),
+            child: Container(
+                child: Image.asset(
+              "assets/images/champion.png",
+              height: defaultSize * 20,
+            )),
           )),
-              )),
           Center(
               child: Container(
             width: MediaQuery.of(context).size.width / 1.2,
@@ -37,7 +37,8 @@ class _FinishContentState extends State<FinishContent> {
             margin: EdgeInsets.all(5),
             child: Center(
               child: Column(children: [
-                Card(
+                Container(
+                  margin: EdgeInsets.only(top: 20),
                   color: Color.fromRGBO(255, 109, 0, 1),
                   child: ConstrainedBox(
                     constraints: BoxConstraints(minWidth: 200),
@@ -74,11 +75,18 @@ class _FinishContentState extends State<FinishContent> {
   }
 
   void _showRatingAppDialog() async {
-    final fb = FirebaseFirestore.instance.collection('Recipe').doc(widget.finishDB.id).collection('RecipeReview');
+    final fb = FirebaseFirestore.instance
+        .collection('Recipe')
+        .doc(widget.finishDB.id)
+        .collection('RecipeReview');
     String name;
-    FirebaseFirestore.instance.collection("Users").doc(await getUID()).get().then((querySnapshot){
-      name = querySnapshot.data()["Firstname"]; 
-      }); 
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(await getUID())
+        .get()
+        .then((querySnapshot) {
+      name = querySnapshot.data()["Firstname"];
+    });
     double defaultSize = SizeConfig.defaultSize;
     final _ratingDialog = RatingDialog(
       image: Image.asset("assets/images/logoRevised.png",
@@ -92,8 +100,11 @@ class _FinishContentState extends State<FinishContent> {
       onSubmitted: (response) {
         print('rating: ${response.rating}, '
             'comment: ${response.comment}');
-          fb.add({'rating': '${response.rating}','comment':'${response.comment}','name':name});
-
+        fb.add({
+          'rating': '${response.rating}',
+          'comment': '${response.comment}',
+          'name': name
+        });
       },
     );
 

@@ -14,23 +14,31 @@ class CookingScreen extends StatelessWidget {
   const CookingScreen({Key key, this.index, this.RecipeDB}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     SizeConfig().init(context);
-    return Scaffold(
-        appBar: buildAppBar(context),
-        body: ListCooking(
-          Index: index,
-          StepDB: RecipeDB,
-        ),
-        bottomNavigationBar: MyBottomNavBar());
+    return Container(
+      margin: EdgeInsets.only(top:10),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/test.jpg"),
+              fit: BoxFit.fill)),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: buildAppBar(context),
+          body: ListCooking(
+            Index: index,
+            StepDB: RecipeDB,
+          ),
+          bottomNavigationBar: MyBottomNavBar()),
+    );
   }
 
   AppBar buildAppBar(BuildContext context) {
     double defaultSize = SizeConfig.defaultSize;
     return AppBar(
+      backgroundColor: Colors.transparent,
       // This is icons and logo on our app bar
       leading: IconButton(
-        icon: SvgPicture.asset("assets/icons/back.svg"),
+        icon: SvgPicture.asset("assets/icons/back.svg",color: Colors.white,),
         onPressed: () {
           if (index > 0) {
             Navigator.push(
@@ -51,12 +59,6 @@ class CookingScreen extends StatelessWidget {
                 ));
           }
         },
-      ),
-      // On Android by default its false
-      centerTitle: true,
-      title: Image.asset(
-        "assets/images/logoRevised.png",
-        height: defaultSize * 4,
       ),
     );
   }
