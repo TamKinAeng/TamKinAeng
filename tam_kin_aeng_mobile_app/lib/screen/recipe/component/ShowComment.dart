@@ -73,7 +73,16 @@ class _CommentListState extends State<CommentList> {
                                 ))),
                           ],
                         ),
-                        Container(child:Text('_______________________________________________'))
+                        Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: defaultSize * 1,
+                              ),
+                              child: Container(
+                                color: Colors.black,
+                                height: defaultSize * 0.1,
+                                width: defaultSize * 50,
+                              ),
+                            )
                       ]));
                 }).toList(),
               );
