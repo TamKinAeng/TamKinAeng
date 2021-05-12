@@ -40,7 +40,7 @@ class RecipeBundleCard extends StatelessWidget {
           // Optional: can add some ripple effect to the InkWell to make our bundle card more beautiful
           child: Padding(
             padding: EdgeInsets.fromLTRB(SizeConfig.defaultSize * 1.8,
-                defaultSize * 2, SizeConfig.defaultSize * 1.8, 0),
+                defaultSize, SizeConfig.defaultSize * 1.8, defaultSize),
             child: Container(
               height: MediaQuery.of(context).size.height * (defaultSize * 0.03),
               // Bundle Box or you could say it a bundle frame

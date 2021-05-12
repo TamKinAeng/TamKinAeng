@@ -8,7 +8,6 @@ import 'package:tam_kin_aeng_mobile_app/component/rounded_input.dart';
 import 'package:tam_kin_aeng_mobile_app/component/rounded_password_input.dart';
 import 'package:tam_kin_aeng_mobile_app/constants.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/register/register.dart';
-import 'package:tam_kin_aeng_mobile_app/screen/forgot/forgot.dart';
 import '../home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -82,28 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   RoundedPasswordInput(controller: _password, hint: 'Password'),
                   SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return forgotScreen();
-                          }));
-                        },
-                        child: Text(
-                          "Forgot password?    ",
-                          style: GoogleFonts.roboto(
-                              textStyle: TextStyle(
-                            fontSize: 17.5,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          )),
-                        ),
-                      )
-                    ],
-                  ),
+        
                   SizedBox(height: 10),
                   RoundedButton(
                     title: 'Login',

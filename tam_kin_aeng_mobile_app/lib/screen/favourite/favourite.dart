@@ -2,12 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/providers/database.dart';
-import 'package:tam_kin_aeng_mobile_app/screen/forgot/forgot.dart';
-import 'package:tam_kin_aeng_mobile_app/screen/home/component/recipe_bundle_card.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/recipe/favRecipe_card.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 
@@ -137,8 +134,8 @@ class _favouritePageState extends State<favouritePage> {
                         height: MediaQuery.of(context).size.height *
                             (defaultSize * 0.083),
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              defaultSize * 0.5, 0, 5, 0), 
+                          padding:
+                              EdgeInsets.fromLTRB(defaultSize * 0.5, 0, 5, 0),
                           child: ListView.builder(
                             itemCount: repList.length,
                             itemBuilder: (context, index) => Container(

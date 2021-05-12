@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tam_kin_aeng_mobile_app/constants.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 
 import 'RecipePage.dart';
@@ -34,7 +35,7 @@ class RecipeCard extends StatelessWidget {
           child: Stack(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(8, 3, 0, 0),
+                padding: EdgeInsets.fromLTRB(6.5, 3, 0, 0),
                 child: Container(
                   height: defaultSize * 100,
                   width: defaultSize * 17,
@@ -56,11 +57,11 @@ class RecipeCard extends StatelessWidget {
                                 children: [
                                   // Recipe Difficulty
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
+                                    padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
                                     child: SvgPicture.asset(
                                       repCard['dificulty'] == 'low'
                                           ? "assets/icons/low_level.svg"
-                                          : repCard['dificulty'] == 'mid'
+                                          : repCard['dificulty'] == 'medium'
                                               ? "assets/icons/med_level.svg"
                                               : "assets/icons/high_level.svg",
                                       height: defaultSize * 2.5,
@@ -68,9 +69,11 @@ class RecipeCard extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
+                                    padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
                                     child: Text(
-                                      repCard['dificulty'],
+                                      repCard['dificulty'] == "medium"
+                                          ? "med"
+                                          : repCard['dificulty'],
                                       style: TextStyle(
                                         fontSize: defaultSize * 1.8, //20
                                         color: Colors.white,
@@ -137,8 +140,8 @@ class RecipeCard extends StatelessWidget {
                   decoration: new BoxDecoration(
                       shape: BoxShape.circle,
                       border: new Border.all(
-                        color: Color(0xFF9575CD),
-                        width: 5.0,
+                        color: kPrimaryColor,
+                        width: 4.5,
                       )),
                 ),
               ),
