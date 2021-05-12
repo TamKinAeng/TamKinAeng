@@ -31,53 +31,37 @@ class RecipeLanding extends StatelessWidget {
           appBar: buildAppBar(context),
           body:
               // Recipe Card
-              //   SingleChildScrollView(
-              // child:
               Container(
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
-                Container(
-                  height: defaultSize * 7,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(7.5, 0, 7.5, 0),
-                    child: Text(
-                      repList['title'],
-                      style: TextStyle(fontSize: defaultSize * 2.9),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                // Flexible(
-                //   flex: 5,
-                //   child:
-                Container(
-                  height: MediaQuery.of(context).size.height *
-                      (defaultSize * 0.0785),
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 2, 0), // นอน 16 ตั้ง 20
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        // mainAxisSpacing: 5,
-                        // crossAxisSpacing: 5,
-                      ),
-                      itemCount: repList['recipeList'].length,
-                      itemBuilder: (context, index) => RecipeCard(
-                        recipeDetail: repList['recipeList'][index],
-                        color: Color(index % 2 == 0
-                            ? repList['subColor1']
-                            : repList['subColor2']),
+                Flexible(
+                  flex: 5,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Padding(
+                      padding:
+                          EdgeInsets.fromLTRB(5, 0, 2, 0), // นอน 16 ตั้ง 20
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          // mainAxisSpacing: 5,
+                          // crossAxisSpacing: 5,
+                        ),
+                        itemCount: repList['recipeList'].length,
+                        itemBuilder: (context, index) => RecipeCard(
+                          recipeDetail: repList['recipeList'][index],
+                          color: Color(index % 2 == 0
+                              ? repList['subColor1']
+                              : repList['subColor2']),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                // ),
               ],
             ),
           ),
-          // ),
           bottomNavigationBar: MyBottomNavBar(),
         );
       },
