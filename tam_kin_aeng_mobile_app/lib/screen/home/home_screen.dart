@@ -30,8 +30,7 @@ class HomeScreen extends StatelessWidget {
             Categories(
               category: "American",
             ),
-            // CategoriesGlobal(),
-            Container()
+            CategoriesGlobal(),
           ],
         ),
         // We are not able to use BottomNavigationBar because the icon parameter dont accept SVG
