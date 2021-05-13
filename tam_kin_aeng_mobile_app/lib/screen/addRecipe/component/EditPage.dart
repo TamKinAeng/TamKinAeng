@@ -37,7 +37,7 @@ class _EditPageState extends State<EditPage> {
 
   @override
   void initState() {
-    _foodname = TextEditingController(text: widget.docToEdit.data()['foodname']);
+    _foodname = TextEditingController(text: widget.docToEdit.data()['name']);
     _description = TextEditingController(text: widget.docToEdit.data()['description']);
     IngredientList = List.from(widget.docToEdit.data()['ingredient']);
     CookingStepList = List.from(widget.docToEdit.data()['cookingStep']);
