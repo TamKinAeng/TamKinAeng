@@ -43,7 +43,7 @@ class CategoriesData extends StatelessWidget {
           return Text('Loading...');
         }
         return Container(
-          height: defaultSize * 3, //30
+          height: MediaQuery.of(context).size.height * 0.3, //30
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: snapshot.data.docs.length,
@@ -63,70 +63,67 @@ class CategoriesData extends StatelessWidget {
                                       recipeIndex: snapshot.data.docs[index],
                                     )));
                       },
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.15, //15%
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: defaultSize * 0.5, //5
-                              ),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        0, 0, defaultSize * 3, 0),
-                                    child: Image.network(
-                                      snapshot.data.docs[index]['imgUrl'],
-                                      height: defaultSize * 7.5, //75
-                                      width: defaultSize * 10, //100
-                                      fit: BoxFit.fill,
-                                      // scale: 0.8,
-                                    ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: defaultSize * 0.5, //5
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      0, 0, defaultSize * 3, 0),
+                                  child: Image.network(
+                                    snapshot.data.docs[index]['imgUrl'],
+                                    height: defaultSize * 7.5, //75
+                                    width: defaultSize * 10, //100
+                                    fit: BoxFit.fill,
+                                    // scale: 0.8,
                                   ),
-                                  Container(
-                                    height: defaultSize * 7.5,
-                                    width: defaultSize * 23,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          snapshot.data.docs[index]['name'],
+                                ),
+                                Container(
+                                  height: defaultSize * 7.5,
+                                  width: defaultSize * 23,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        snapshot.data.docs[index]['name'],
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Text(
+                                          snapshot.data.docs[index]
+                                              ['description'],
                                           style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey,
                                           ),
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                        Flexible(
-                                          child: Text(
-                                            snapshot.data.docs[index]
-                                                ['description'],
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                            ),
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: defaultSize * 1,
-                              ),
-                              child: Container(
-                                color: Colors.black,
-                                height: defaultSize * 0.1,
-                                width: defaultSize * 50,
-                              ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: defaultSize * 1,
                             ),
-                          ],
-                        ),
+                            child: Container(
+                              color: Colors.black,
+                              height: defaultSize * 0.1,
+                              width: defaultSize * 50,
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   : Container();
