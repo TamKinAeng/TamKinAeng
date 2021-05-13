@@ -389,6 +389,8 @@ class _addpageScreenState extends State<addpageScreen> {
                     .collection('Users')
                     .doc(uid)
                     .collection('AddRecipe');
+                CollectionReference refe = FirebaseFirestore.instance
+                    .collection('AddRecipe');
                 String url;
                 if(_image != null) {
                   String fileName = uid + DateTime
@@ -405,6 +407,15 @@ class _addpageScreenState extends State<addpageScreen> {
                   });
                 };
                 ref.add({
+                  'name': _foodname.text, //field
+                  'description': _description.text, //field
+                  'ingredient': IngredientList,
+                  'cuisine': _category.toString(), //dropdown
+                  'difficulty': _level.toString(), //dropdown
+                  'cookingStep': CookingStepList,
+                  'imgUrl': url,
+                }).whenComplete(() => Navigator.pop(context));
+                refe.add({
                   'name': _foodname.text, //field
                   'description': _description.text, //field
                   'ingredient': IngredientList,
