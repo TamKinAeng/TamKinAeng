@@ -4,6 +4,7 @@ import 'package:tam_kin_aeng_mobile_app/component/my_bottom_nav_bar.dart';
 import 'package:tam_kin_aeng_mobile_app/constants.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/body.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/home/component/categories.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/home/component/categoryGlobal.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 
@@ -29,9 +30,7 @@ class HomeScreen extends StatelessWidget {
             Categories(
               category: "American",
             ),
-            Categories(
-              category: "Global",
-            ),
+            CategoriesGlobal(),
           ],
         ),
         // We are not able to use BottomNavigationBar because the icon parameter dont accept SVG

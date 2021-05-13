@@ -24,17 +24,7 @@ class ProfileScreen extends StatelessWidget {
       centerTitle: true,
       title: Text("Profile"),
       actions: <Widget>[
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            "Edit",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: SizeConfig.defaultSize * 1.6, //16
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        
       ],
     );
   }

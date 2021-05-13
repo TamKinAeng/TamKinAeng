@@ -46,14 +46,19 @@ class _ListCookingState extends State<ListCooking> {
                   child: Row(
                     children: [
                       Card(
-                        child: Text(
-                          'Step: ' + (widget.Index + 1).toString(),
-                          style: GoogleFonts.roboto(
-                              textStyle: TextStyle(
-                            height: 1.15,
-                            fontSize: 38.0,
-                          )),
-                          textAlign: TextAlign.center,
+                        color: Color.fromRGBO(255, 109, 0, 1),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(minWidth: 200),
+                          child: Text(
+                            'Step: ' + (widget.Index + 1).toString(),
+                            style: GoogleFonts.roboto(
+                                textStyle: TextStyle(
+                              height: 1.15,
+                              fontSize: 38.0,
+                              color: Colors.white,
+                            )),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ],
@@ -61,12 +66,14 @@ class _ListCookingState extends State<ListCooking> {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width / 1.2,
+                  width: MediaQuery.of(context).size.width / 1.4,
                   child: Text(
                     lists[widget.Index]["value"],
                     style: GoogleFonts.roboto(
                         textStyle: TextStyle(
-                      fontSize: 28,
+                      letterSpacing: -1.0,
+                      wordSpacing: 2.0,
+                      fontSize: 20,
                     )),
                     textAlign: TextAlign.center,
                   ),
@@ -121,28 +128,7 @@ class _ListCookingState extends State<ListCooking> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         FloatingActionButton.extended(
-                            label: Text("Back"),
-                            onPressed: () {
-                              if (widget.Index > 0) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CookingScreen(
-                                        index: widget.Index - 1,
-                                        RecipeDB: widget.StepDB,
-                                      ),
-                                    ));
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CheckboxList(
-                                        IngredientDB: widget.StepDB,
-                                      ),
-                                    ));
-                              }
-                            }),
-                        FloatingActionButton.extended(
+                            backgroundColor: Color.fromRGBO(60, 9, 108, 1),
                             label: Text("Next"),
                             onPressed: () {
                               if (widget.Index < lists.length - 1) {
@@ -158,7 +144,9 @@ class _ListCookingState extends State<ListCooking> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => FinishScreen(),
+                                      builder: (context) => FinishScreen(
+                                        finishDB: widget.StepDB,
+                                      ),
                                     ));
                               }
                             }),

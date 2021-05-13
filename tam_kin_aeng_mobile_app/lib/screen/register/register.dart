@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +8,9 @@ import 'package:tam_kin_aeng_mobile_app/component/rounded_button.dart';
 import 'package:tam_kin_aeng_mobile_app/screen/Login/login.dart';
 import 'package:flutter/src/material/raised_button.dart';
 import 'package:tam_kin_aeng_mobile_app/constants.dart';
+import 'package:tam_kin_aeng_mobile_app/screen/register/firebase.dart';
 import 'package:tam_kin_aeng_mobile_app/size_config.dart';
+import 'package:tam_kin_aeng_mobile_app/component/input_container.dart';
 
 class registerScreen extends StatefulWidget {
   @override
@@ -22,11 +25,27 @@ class _registerScreenState extends State<registerScreen> {
   String _lastname;
   String _gender;
   String _birthdate;
-
+  
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildEmailField() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: 'Email'),
+     Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      width: size.width*1,
+      height: size.height*0.07,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(40),
+        color: Colors.white
+        
+      ),
+    child: TextFormField(
+        decoration: InputDecoration( hintText: 'Email',
+            border: InputBorder.none,
+            prefixIcon: Icon(Icons.email,
+             color: kPrimaryColor
+             )
+             ),
         validator: (String value) {
           if (!RegExp(
                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+")
@@ -37,13 +56,29 @@ class _registerScreenState extends State<registerScreen> {
         },
         onSaved: (String value) {
           _email = value;
-        });
+        }
+        )
+    );
   }
-
   Widget _buildPasswordField() {
+   Size size = MediaQuery.of(context).size;
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      width: size.width*1,
+      height: size.height*0.07,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(40),
+        color: Colors.white
+      ),
       child: TextFormField(
-          decoration: InputDecoration(labelText: 'Password'),
+          decoration: InputDecoration(
+            hintText: 'Password',
+            border: InputBorder.none,
+            prefixIcon: Icon(Icons.lock,
+            color: kPrimaryColor
+            )
+            ),
           keyboardType: TextInputType.visiblePassword,
           validator: (String value) {
             if (value.isEmpty) {
@@ -58,9 +93,21 @@ class _registerScreenState extends State<registerScreen> {
   }
 
   Widget _buildFirstNameField() {
+    Size size = MediaQuery.of(context).size;
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      width: size.width*1,
+      height: size.height*0.07,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(40),
+        color: Colors.white
+      ),
       child: TextFormField(
-          decoration: InputDecoration(labelText: 'Firstname'),
+          decoration: InputDecoration(
+             hintText: 'Firstname',
+            border: InputBorder.none
+            ),
           validator: (String value) {
             if (value.isEmpty) {
               return 'Firstname is Required';
@@ -74,8 +121,21 @@ class _registerScreenState extends State<registerScreen> {
   }
 
   Widget _buildLastNameField() {
-    return TextFormField(
-        decoration: InputDecoration(labelText: 'Lastname'),
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      width: size.width*1,
+      height: size.height*0.07,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(40),
+        color: Colors.white
+      ),
+    child: TextFormField(
+        decoration: InputDecoration(
+          hintText: 'Lastname',
+          border: InputBorder.none
+          ),
         validator: (String value) {
           if (value.isEmpty) {
             return 'Lastname is Required';
@@ -84,7 +144,7 @@ class _registerScreenState extends State<registerScreen> {
         },
         onSaved: (String value) {
           _lastname = value;
-        });
+        }));
   }
 
   Widget _buildGenderField() {
@@ -102,8 +162,21 @@ class _registerScreenState extends State<registerScreen> {
     ); */
 
         Container(
-      child: DropdownButton(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          decoration: BoxDecoration(borderRadius: new BorderRadius.circular(40.0),
+          color: Colors.white
+          ),
+          
+      child: new DropdownButton(
+        iconEnabledColor: Colors.white,
+        style: GoogleFonts.roboto(
+          textStyle: TextStyle(color: Colors.black, fontSize: 18)),
+          underline: Container(
+          height: 2,
+          color: kSecondaryColor),
           hint: Text("Gender"),
+          icon: Icon(Icons.arrow_downward, color: kSecondaryColor,),
           value: _gender,
           items: [
             DropdownMenuItem(
@@ -131,8 +204,12 @@ class _registerScreenState extends State<registerScreen> {
     return Column(
       children: <Widget>[
         RaisedButton(
+          color: kSecondaryColor,
           child:
-              Text(_birthdate == null ? 'Pick a date' : _birthdate.toString()),
+              Text(_birthdate == null ? 'Pick Birthdate' : _birthdate.toString(),
+              style: GoogleFonts.roboto(
+                textStyle: TextStyle(color: Colors.white, fontSize: 18)
+              ),),
           onPressed: () {
             showDatePicker(
                     context: context,
@@ -147,15 +224,17 @@ class _registerScreenState extends State<registerScreen> {
           },
         ),
       ],
+      
     );
   }
 
   Widget build(BuildContext context) {
     FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     return Scaffold(
+      backgroundColor: kPrimaryColor,
       appBar: buildAppBar(context),
         body: SingleChildScrollView(
-      child: Container(
+        child: Container(
           margin: EdgeInsets.all(24),
           alignment: Alignment.center,
           child: Form(
@@ -169,7 +248,7 @@ class _registerScreenState extends State<registerScreen> {
                     style: GoogleFonts.righteous(
                       textStyle: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                        fontSize: 28, color: Colors.white
                       ),
                     ),
                   ),
@@ -177,7 +256,7 @@ class _registerScreenState extends State<registerScreen> {
                   Text("If you don't have account, you can register now",
                       style: GoogleFonts.roboto(
                           textStyle: TextStyle(
-                        fontSize: 12,
+                        fontSize: 14, color: Colors.white
                       ))),
                   _buildEmailField(),
                   _buildPasswordField(),
@@ -186,9 +265,12 @@ class _registerScreenState extends State<registerScreen> {
                   _buildGenderField(),
                   _buildBirthDateField(),
                   SizedBox(height: 10),
-                  TextButton(
-                      child: Text('Submit',
-                          style: TextStyle(color: Colors.red, fontSize: 16)),
+                  RaisedButton(
+                    color: kSecondaryColor,
+                    child: Text(
+                          "Register",
+                          style: GoogleFonts.roboto(
+                            textStyle: TextStyle(color: Colors.white, fontSize: 20))),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
@@ -204,10 +286,16 @@ class _registerScreenState extends State<registerScreen> {
                               MaterialPageRoute(
                                   builder: (context) => LoginScreen()),
                             );
+                            userInfo(_email, _firstname, _lastname, _gender, _birthdate);
                           } on FirebaseAuthException catch (e) {
                             print(e.message);
                           }
-
+                          print(_email);
+                          print(_password);
+                          print(_firstname);
+                          print(_lastname);
+                          print(_gender);
+                          print(_birthdate);
                         } else {
                           print("hello12");
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -221,19 +309,12 @@ class _registerScreenState extends State<registerScreen> {
 }
 AppBar buildAppBar(BuildContext context) {
     return AppBar(
+      backgroundColor: kPrimaryColor,
       // This is icons and logo on our app bar
         leading: IconButton(
-          icon: SvgPicture.asset("assets/icons/back.svg"),
+          icon: SvgPicture.asset("assets/icons/back.svg", color: Colors.white),
           //back icon go back to add recipe body
           onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));},
-        ),
-        // On Android by default its false
-        centerTitle: true,
-        title: Image.asset("assets/images/logo.png"),
-        actions: <Widget>[
-          SizedBox(
-            // It means 5 because by out defaultSize = 10
-            width: (0.5),
-          )
-        ]);
+        ),);
   }
+

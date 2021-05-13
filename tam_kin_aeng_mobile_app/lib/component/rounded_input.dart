@@ -15,11 +15,30 @@ class RoundedInput extends StatefulWidget {
   String hint;
   bool isError = false;
   TextEditingController controller;
+
   @override
   _RoundedInputState createState() => _RoundedInputState();
 }
 
 class _RoundedInputState extends State<RoundedInput> {
+
+  FocusNode myFocusNode = new FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    myFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed.
+    myFocusNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InputContainer(
@@ -30,19 +49,29 @@ class _RoundedInputState extends State<RoundedInput> {
             || RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+").hasMatch(value)){
               setState(() {
                 widget.isError = true;
-                widget.hint = "Please enter a valid email";
+                widget.hint = "Enter a valid email";
               });
-              return "";
             }
             return null;
           },
         cursorColor: kPrimaryColor,
+        focusNode: myFocusNode,
         decoration: InputDecoration(
           icon: Icon(widget.icon, color: kPrimaryColor),
           hintText: widget.hint,
           hintStyle: TextStyle(color: widget.isError? Colors.red: Colors.black54),
           border: InputBorder.none
         ),
+        onTap: () => {
+            setState(() {
+              FocusScope.of(context).requestFocus(myFocusNode);
+            })
+          },
+          onEditingComplete: () => {
+            setState(() {
+              myFocusNode.nextFocus();
+            })
+          },
       ),);
   }
 }

@@ -25,150 +25,79 @@ class _CheckboxListState extends State<CheckboxList> {
   bool selected = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('Recipe')
-              .doc(widget.IngredientDB.id)
-              .collection('ingredient')
-              .snapshots(),
-          builder: (BuildContext context, snapshot) {
-            var lists = [];
-            if (snapshot.hasData) {
-              lists.clear();
-              Map<dynamic, dynamic> values = snapshot.data.docs.asMap();
-              // print(values[0]['value']);
-              // print(IngredientCheck(title: values[0]['value']));
-              for (var i = 0; i < values.length; i++) {
-                lists.add(IngredientCheck(title: values[i]['value']));
-              }
-
-              // values.forEach((key, value) {
-              //   lists.add(IngredientCheck(title: values['value']));
-              // });
-              // print(lists[0]);
-
-            }
-
-            // return Scaffold(
-            //   body: Column(
-            //     children: [
-            //       SizedBox(
-            //         height: 200.0,
-            //         child: ListView(
-            //           children: [
-            //             ...lists.map(buildSingleCheckbox).toList(),
-            //           ],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // );
-
-            return Scaffold(
-                appBar: buildAppBar(context),
-                body: ListView(
-                  children: <Widget>[
-                    for (var i = 0; i < lists.length; i++)
-                      Exercise(
-                        title: lists[i].title,
-                      )
-                  ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width / 1.2,
+            height: MediaQuery.of(context).size.height / 6,
+            child: Row(
+              children: [
+                Card(
+                  color: Color.fromRGBO(255, 109, 0, 1),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: 200),
+                    child: Text(
+                      'Ingredient',
+                      style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                        height: 1.15,
+                        fontSize: 38.0,
+                        color: Colors.white,
+                      )),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
-                floatingActionButton: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                  FloatingActionButton.extended(
-                            label: Text("Back"),
-                            onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => RecipeScreen(
-                                        recipeIndex: widget.IngredientDB,
-                                      ),
-                                    ));
-                            }),
-                        FloatingActionButton.extended(
-                            label: Text("Next"),
-                            onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CookingScreen(
-                                        index: 0,
-                                        RecipeDB: widget.IngredientDB,
-                                      ),
-                                    ));
-                            }),
-                ],),
-                floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-                bottomNavigationBar: MyBottomNavBar());
-          }),
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+          ),
+          Container(
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('Recipe')
+                    .doc(widget.IngredientDB.id)
+                    .collection('ingredient')
+                    .snapshots(),
+                builder: (BuildContext context, snapshot) {
+                  var lists = [];
+                  if (snapshot.hasData) {
+                    lists.clear();
+                    Map<dynamic, dynamic> values = snapshot.data.docs.asMap();
+                    // print(values[0]['value']);
+                    // print(IngredientCheck(title: values[0]['value']));
+                    for (var i = 0; i < values.length; i++) {
+                      lists.add(IngredientCheck(title: values[i]['value']));
+                    }
+                  }
+
+                  return Column(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        height: MediaQuery.of(context).size.height / 1.4,
+                        child: ListView(
+                          children: <Widget>[
+                            for (var i = 0; i < lists.length; i++)
+                              Exercise(
+                                title: lists[i].title,
+                              )
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+           
+          ])
+        ],
+      ),
     );
-    //         }),
-    //   );
-    // }
-
-    // dynamic buildSingleCheckbox(IngredientCheck notification) => buildCheckbox(
-    //       notification: notification,
-    //       onClicked: () {
-    //         setState(() {
-    //           final newValue = !notification.value;
-    //           notification.value = newValue;
-    //         });
-    //       },
-    //     );
-
-    // dynamic buildCheckbox({
-    //   @required IngredientCheck notification,
-    //   @required VoidCallback onClicked,
-    // }) =>
-    //     ListTile(
-    //       onTap: onClicked,
-    //       leading: Checkbox(
-    //         value: notification.value,
-    //         onChanged: (value) => onClicked(),
-    //       ),
-    //       title: Text(
-    //         notification.title,
-    //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-    //       ),
-    //     );
   }
 }
-
-AppBar buildAppBar(BuildContext context) {
-    double defaultSize = SizeConfig.defaultSize;
-    return AppBar(
-        // This is icons and logo on our app bar
-        leading: IconButton(
-          icon: SvgPicture.asset("assets/icons/back.svg"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        // On Android by default its false
-        centerTitle: true,
-        title: Image.asset(
-          "assets/images/logoRevised.png",
-          height: defaultSize * 4,
-        ),
-        actions: <Widget>[
-          // Search Button
-          IconButton(
-            icon: SvgPicture.asset("assets/icons/search.svg"),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DataSearch()));
-            },
-          ),
-          SizedBox(
-            // It means 5 because by out defaultSize = 10
-            width: SizeConfig.defaultSize * 0.5,
-          )
-        ]);
-  }
 
 class Exercise extends StatefulWidget {
   final String title;
@@ -187,6 +116,7 @@ class _ExerciseState extends State<Exercise> {
     return ListTile(
       title: Text(widget.title),
       trailing: Checkbox(
+          activeColor: Color.fromRGBO(60, 9, 108, 1),
           value: selected,
           onChanged: (bool val) {
             setState(() {

@@ -18,26 +18,22 @@ class RoundedButton extends StatelessWidget {
 
   final String title;
   final Widget pagelink;
-  final String email;
-  final String password;
+  final TextEditingController email;
+  final TextEditingController password;
   final GlobalKey<FormState> formkey;
   
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return InkWell(
-      onTap: () async {
+    return RaisedButton(
+      onPressed: () async {
         print(formkey.currentState.validate());
-        print("hello");
-        if (!formkey.currentState.validate()){
+        if (formkey.currentState.validate()){
           try { FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-          print("hello");
-          print(email);
-          print(password);
             await _firebaseAuth.signInWithEmailAndPassword(
-              email: email, 
-              password: password
+              email: email.text, 
+              password: password.text
               );
                Navigator.push(context, MaterialPageRoute(builder: (context) => this.pagelink));
           } on FirebaseAuthException catch (e){
@@ -50,25 +46,15 @@ class RoundedButton extends StatelessWidget {
           .showSnackBar(SnackBar(content: Text('There was an error')));
         }
       },
-      borderRadius: BorderRadius.circular(30),
-      child: Container(
-        width: size.width*0.3,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: kPrimaryColor,
-        ),
-
-        padding: EdgeInsets.symmetric(vertical: 10),
-        alignment: Alignment.center,
+      color: kSecondaryColor,
         child: Text(
           this.title,
           style: GoogleFonts.roboto(
           textStyle: TextStyle(
             color: Colors.white,
-            fontSize: 18
+            fontSize: 18,
           ),
         ),
-      ),
       ),
       );
   }
